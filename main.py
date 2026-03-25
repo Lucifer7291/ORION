@@ -15,20 +15,22 @@ def run_orion():
             print("🛑 ORION shutting down...")
             break
 
-        # 🔥 1. COMMANDS (TOP PRIORITY)
-        cmd = execute_command(user_input)
+        # 🧠 Detect intent ONCE (used everywhere)
+        intent = memory.detect_intent(user_input)
+
+        # 🔥 1. COMMANDS (Intent-based + NLP)
+        cmd = execute_command(user_input, intent)
         if cmd:
             print("ORION ⚡:", cmd)
             continue
 
-        # ⚡ 2. LEARNED MEMORY (NEW)
+        # ⚡ 2. LEARNED MEMORY (HIGH PRIORITY)
         learned = memory.get_learned(user_input)
         if learned:
             print("ORION ⚡:", learned)
             continue
 
-        # ⚡ 3. INTENT RESPONSES
-        intent = memory.detect_intent(user_input)
+        # ⚡ 3. INTENT RESPONSES (CHAT TYPE)
         if intent and intent in RESPONSES:
             if intent == "time":
                 from datetime import datetime

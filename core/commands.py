@@ -4,39 +4,31 @@ from datetime import datetime
 import config
 
 
-# 🔥 Helper: safer keyword matching
-def contains(text, keywords):
-    return any(word in text for word in keywords)
+# 🔥 Intent → Action Mapping
+def handle_intent(intent, text):
 
-
-def execute_command(text):
-    text = text.lower().strip()
-
-    # 🔥 ─── AI MODE CONTROL ─────────────────────────
-    if contains(text, ["enable ai", "turn on ai", "start ai"]):
-        config.AI_MODE = True
-        return "AI mode enabled"
-
-    if contains(text, ["disable ai", "turn off ai", "stop ai"]):
-        config.AI_MODE = False
-        return "AI mode disabled"
-
-    # 🌐 ─── BROWSER COMMANDS (STRICT MATCH) ─────────
-    if contains(text, ["open youtube", "start youtube", "launch youtube"]):
+    # 🌐 WEB
+    if intent == "open_youtube":
         webbrowser.open("https://youtube.com")
         return "Opening YouTube"
 
-    if contains(text, ["open google", "start google", "launch google"]):
+    if intent == "open_google":
         webbrowser.open("https://google.com")
         return "Opening Google"
 
-    if contains(text, ["open github", "start github"]):
+    if intent == "open_github":
         webbrowser.open("https://github.com")
         return "Opening GitHub"
 
-    # 🔍 SMART SEARCH
-    if "search" in text:
-        query = text.split("search")[-1].strip()
+    # 🔍 SEARCH (dynamic)
+    if intent == "search":
+        # extract query after keywords
+        words = ["search", "find", "look up", "search for"]
+        query = text
+
+        for w in words:
+            if w in text:
+                query = text.split(w)[-1].strip()
 
         if not query:
             return "What should I search?"
@@ -44,57 +36,94 @@ def execute_command(text):
         webbrowser.open(f"https://www.google.com/search?q={query}")
         return f"Searching for {query}"
 
-    # 💻 ─── SYSTEM APPS ────────────────────────────
-    if contains(text, ["open notepad", "start notepad"]):
+    # 💻 SYSTEM APPS
+    if intent == "open_notepad":
         os.system("notepad")
         return "Opening Notepad"
 
-    if contains(text, ["open calculator", "start calculator", "calc"]):
+    if intent == "open_calculator":
         os.system("calc")
         return "Opening Calculator"
 
-    if contains(text, ["open cmd", "command prompt"]):
+    if intent == "open_cmd":
         os.system("start cmd")
         return "Opening Command Prompt"
 
-    if contains(text, ["open vscode", "visual studio code"]):
+    if intent == "open_vscode":
         try:
             os.system("code")
             return "Opening VS Code"
         except:
             return "VS Code not found"
 
-    if contains(text, ["open chrome", "start chrome"]):
+    if intent == "open_chrome":
         try:
             os.system("start chrome")
             return "Opening Chrome"
         except:
             return "Chrome not found"
 
-    # 📁 ─── FILE EXPLORER ─────────────────────────
-    if contains(text, ["open downloads", "show downloads"]):
+    # 📁 FILES
+    if intent == "open_downloads":
         os.startfile(os.path.expanduser("~/Downloads"))
         return "Opening Downloads"
 
-    if contains(text, ["open documents", "show documents"]):
+    if intent == "open_documents":
         os.startfile(os.path.expanduser("~/Documents"))
         return "Opening Documents"
 
-    # 🔊 ─── SYSTEM CONTROL ────────────────────────
-    if contains(text, ["shutdown pc", "turn off computer", "power off"]):
+    # 🔊 SYSTEM CONTROL
+    if intent == "shutdown":
         os.system("shutdown /s /t 5")
         return "Shutting down in 5 seconds"
 
-    if contains(text, ["restart pc", "reboot system"]):
+    if intent == "restart":
         os.system("shutdown /r /t 5")
         return "Restarting in 5 seconds"
 
-    # ⏰ ─── TIME / DATE ───────────────────────────
-    if contains(text, ["time", "current time"]):
+    # ⏰ TIME / DATE
+    if intent == "time":
         return datetime.now().strftime("Current time: %H:%M")
 
-    if contains(text, ["date", "today date"]):
+    if intent == "date":
         return datetime.now().strftime("Today's date: %Y-%m-%d")
 
-    # ❌ No command matched
     return None
+
+
+# 🔥 FALLBACK NLP (if intent not detected)
+def fallback_nlp(text):
+
+    # very loose understanding
+    if "youtube" in text:
+        webbrowser.open("https://youtube.com")
+        return "Opening YouTube"
+
+    if "google" in text:
+        webbrowser.open("https://google.com")
+        return "Opening Google"
+
+    return None
+
+
+# 🔥 MAIN COMMAND FUNCTION
+def execute_command(text, intent=None):
+    text = text.lower().strip()
+
+    # 🔥 AI MODE CONTROL (still direct)
+    if "enable ai" in text:
+        config.AI_MODE = True
+        return "AI mode enabled"
+
+    if "disable ai" in text:
+        config.AI_MODE = False
+        return "AI mode disabled"
+
+    # 🔥 1. Try intent-based execution
+    if intent:
+        result = handle_intent(intent, text)
+        if result:
+            return result
+
+    # 🔥 2. Fallback NLP
+    return fallback_nlp(text)
