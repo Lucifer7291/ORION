@@ -132,5 +132,8 @@
     "react": {
         "definition": "React is a JavaScript library for building user interfaces.",
         "uses": "Used for building modern web apps."
-    }
+    },
+    "hi orion": "Hi Lucifer, How i can help you???",
+    "good": "thanks",
+    "off": "exit"
 }

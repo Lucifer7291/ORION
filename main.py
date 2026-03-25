@@ -1,10 +1,6 @@
 from memory.memory_engine import MemoryEngine
 from memory.intent_responses import RESPONSES
 from core.commands import execute_command
-from config import AI_MODE
-from brain.ai_engine import OrionAI
-
-ai = OrionAI()
 
 
 def run_orion():
@@ -19,13 +15,19 @@ def run_orion():
             print("🛑 ORION shutting down...")
             break
 
-        # 🔥 1. COMMANDS
+        # 🔥 1. COMMANDS (TOP PRIORITY)
         cmd = execute_command(user_input)
         if cmd:
             print("ORION ⚡:", cmd)
             continue
 
-        # ⚡ 2. INTENT
+        # ⚡ 2. LEARNED MEMORY (NEW)
+        learned = memory.get_learned(user_input)
+        if learned:
+            print("ORION ⚡:", learned)
+            continue
+
+        # ⚡ 3. INTENT RESPONSES
         intent = memory.detect_intent(user_input)
         if intent and intent in RESPONSES:
             if intent == "time":
@@ -38,26 +40,20 @@ def run_orion():
                 print("ORION ⚡:", RESPONSES[intent])
             continue
 
-        # 🧠 3. KNOWLEDGE
+        # 🧠 4. KNOWLEDGE SYSTEM
         knowledge = memory.get_knowledge(user_input)
         if knowledge:
             for key, value in knowledge.items():
                 print(f"{key.capitalize()}: {value}")
             continue
 
-        # 🧠 4. AI (optional)
-        if AI_MODE:
-            print("ORION 🧠:", ai.generate(user_input))
-            continue
-
-            # ❌ FALLBACK → LEARNING MODE
+        # ❌ 5. FALLBACK → LEARNING MODE
         print("ORION:", "I don't know that yet.")
 
         learn = input("Teach me? (y/n): ").lower().strip()
 
         if learn == "y":
             answer = input("Enter answer: ")
-
             memory.learn(user_input, answer)
             print("ORION ⚡: Learned successfully!")
 
