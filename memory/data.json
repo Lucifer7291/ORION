@@ -1,0 +1,136 @@
+{
+    "greeting": [
+        "hi",
+        "hello",
+        "hey",
+        "hii",
+        "good morning",
+        "good evening",
+        "good afternoon"
+    ],
+    "identity": [
+        "who are you",
+        "what is your name",
+        "tell me about yourself"
+    ],
+    "status": [
+        "how are you",
+        "are you working",
+        "are you online",
+        "are you active"
+    ],
+    "thanks": [
+        "thanks",
+        "thank you",
+        "thx",
+        "thanks a lot"
+    ],
+    "farewell": [
+        "bye",
+        "goodbye",
+        "exit",
+        "see you",
+        "quit"
+    ],
+    "time": [
+        "time",
+        "what time is it",
+        "current time",
+        "tell me time"
+    ],
+    "date": [
+        "date",
+        "today date",
+        "what is today's date",
+        "current date"
+    ],
+    "open_youtube": [
+        "open youtube",
+        "start youtube",
+        "launch youtube"
+    ],
+    "open_google": [
+        "open google",
+        "start google",
+        "launch google"
+    ],
+    "open_github": [
+        "open github",
+        "start github"
+    ],
+    "open_notepad": [
+        "open notepad",
+        "start notepad"
+    ],
+    "open_calculator": [
+        "open calculator",
+        "start calculator"
+    ],
+    "open_cmd": [
+        "open cmd",
+        "open command prompt"
+    ],
+    "open_vscode": [
+        "open vscode",
+        "open visual studio code"
+    ],
+    "open_chrome": [
+        "open chrome",
+        "start chrome"
+    ],
+    "open_downloads": [
+        "open downloads",
+        "show downloads"
+    ],
+    "open_documents": [
+        "open documents",
+        "show documents"
+    ],
+    "shutdown": [
+        "shutdown pc",
+        "turn off computer",
+        "power off"
+    ],
+    "restart": [
+        "restart pc",
+        "reboot system"
+    ],
+    "search": [
+        "search",
+        "find",
+        "look up",
+        "search for"
+    ],
+    "weather": [
+        "weather",
+        "today weather",
+        "temperature"
+    ],
+    "system_info": [
+        "system status",
+        "cpu usage",
+        "ram usage",
+        "battery status"
+    ],
+    "python": {
+        "definition": "Python is a high-level programming language.",
+        "uses": "Used in web development, AI, automation.",
+        "creator": "Created by Guido van Rossum."
+    },
+    "html": {
+        "definition": "HTML is used to structure web pages.",
+        "uses": "Used for building websites."
+    },
+    "css": {
+        "definition": "CSS is used to style web pages.",
+        "uses": "Used for designing layouts and UI."
+    },
+    "javascript": {
+        "definition": "JavaScript is a programming language for web development.",
+        "uses": "Used for frontend and backend development."
+    },
+    "react": {
+        "definition": "React is a JavaScript library for building user interfaces.",
+        "uses": "Used for building modern web apps."
+    }
+}
