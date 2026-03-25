@@ -44,10 +44,18 @@
         "what is today's date",
         "current date"
     ],
+    "search": [
+        "search",
+        "search for",
+        "find",
+        "look up",
+        "look for"
+    ],
     "open_youtube": [
         "open youtube",
         "start youtube",
-        "launch youtube"
+        "launch youtube",
+        "play youtube"
     ],
     "open_google": [
         "open google",
@@ -57,6 +65,10 @@
     "open_github": [
         "open github",
         "start github"
+    ],
+    "open_stackoverflow": [
+        "open stackoverflow",
+        "start stackoverflow"
     ],
     "open_notepad": [
         "open notepad",
@@ -68,15 +80,27 @@
     ],
     "open_cmd": [
         "open cmd",
+        "cmd",
+        "command prompt",
         "open command prompt"
-    ],
-    "open_vscode": [
-        "open vscode",
-        "open visual studio code"
     ],
     "open_chrome": [
         "open chrome",
-        "start chrome"
+        "start chrome",
+        "launch chrome",
+        "chrome browser"
+    ],
+    "open_vscode": [
+        "open vscode",
+        "open visual studio code",
+        "start vscode"
+    ],
+    "open_task_manager": [
+        "open task manager",
+        "start task manager"
+    ],
+    "open_control_panel": [
+        "open control panel"
     ],
     "open_downloads": [
         "open downloads",
@@ -85,6 +109,10 @@
     "open_documents": [
         "open documents",
         "show documents"
+    ],
+    "open_desktop": [
+        "open desktop",
+        "show desktop"
     ],
     "shutdown": [
         "shutdown pc",
@@ -95,11 +123,46 @@
         "restart pc",
         "reboot system"
     ],
-    "search": [
-        "search",
-        "find",
-        "look up",
-        "search for"
+    "lock": [
+        "lock system",
+        "lock pc"
+    ],
+    "volume_up": [
+        "increase volume",
+        "volume up",
+        "raise volume",
+        "increase sound"
+    ],
+    "volume_down": [
+        "decrease volume",
+        "volume down",
+        "lower volume",
+        "reduce volume"
+    ],
+    "mute": [
+        "mute",
+        "mute volume",
+        "silence"
+    ],
+    "unmute": [
+        "unmute",
+        "sound on",
+        "turn on sound"
+    ],
+    "max_volume": [
+        "max volume",
+        "full volume",
+        "maximum volume"
+    ],
+    "min_volume": [
+        "minimum volume",
+        "zero volume",
+        "mute completely"
+    ],
+    "repeat": [
+        "more",
+        "again",
+        "do it again"
     ],
     "weather": [
         "weather",
@@ -133,7 +196,7 @@
         "definition": "React is a JavaScript library for building user interfaces.",
         "uses": "Used for building modern web apps."
     },
-    "hi orion": "Hi Lucifer, How i can help you???",
-    "good": "thanks",
+    "hi orion": "Hi Lucifer, how can I help you?",
+    "good": "Thanks",
     "off": "exit"
 }

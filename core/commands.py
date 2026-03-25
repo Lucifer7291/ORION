@@ -1,13 +1,102 @@
 import webbrowser
 import os
+import re
 from datetime import datetime
 import config
 
 
-# 🔥 Intent → Action Mapping
-def handle_intent(intent, text):
+# =========================================================
+# 🔥 GLOBAL STATE (IMPORTANT)
+# =========================================================
+if not hasattr(config, "LAST_VOLUME_ACTION"):
+    config.LAST_VOLUME_ACTION = None
 
-    # 🌐 WEB
+
+# =========================================================
+# 🔥 Helper: check tool existence
+# =========================================================
+def tool_exists(tool):
+    return any(
+        os.access(os.path.join(path, tool), os.X_OK)
+        for path in os.environ["PATH"].split(os.pathsep)
+    )
+
+
+# =========================================================
+# 🔥 Extract search query
+# =========================================================
+def extract_query(text):
+    words = ["search", "find", "look up", "search for"]
+    for w in words:
+        if w in text:
+            return text.split(w)[-1].strip()
+    return ""
+
+
+# =========================================================
+# 🔥 Extract number
+# =========================================================
+def extract_number(text, default=10):
+    match = re.search(r"\d+", text)
+    return int(match.group()) if match else default
+
+
+# =========================================================
+# 🔥 MAIN INTENT HANDLER
+# =========================================================
+def handle_intent(intent, text, last_query=None):
+
+    # =====================================================
+    # 🔥 "MORE" COMMAND (STATEFUL)
+    # =====================================================
+    if text in ["more", "increase more", "decrease more"]:
+        if not tool_exists("nircmd.exe"):
+            return "Install NirCmd to control volume."
+
+        if config.LAST_VOLUME_ACTION == "up":
+            os.system(f"nircmd changesysvolume {10 * 655}")
+            return "Volume increased by 10"
+
+        elif config.LAST_VOLUME_ACTION == "down":
+            os.system(f"nircmd changesysvolume -{10 * 655}")
+            return "Volume decreased by 10"
+
+        return "Nothing to repeat."
+
+    # =====================================================
+    # 🔥 COMBINED YOUTUBE SEARCH (NO DOUBLE TAB)
+    # =====================================================
+    if "youtube" in text and "search" in text:
+        query = extract_query(text)
+
+        if query in ["it", "this", "that"] and last_query:
+            query = last_query
+
+        if not query:
+            return "What should I search on YouTube?"
+
+        webbrowser.open(
+            f"https://www.youtube.com/results?search_query={query}")
+        return f"Searching YouTube for {query}"
+
+    # =====================================================
+    # 🔍 GOOGLE SEARCH
+    # =====================================================
+    if intent == "search":
+        query = extract_query(text)
+
+        if query in ["it", "this", "that"] and last_query:
+            query = last_query
+
+        if not query:
+            return "What should I search?"
+
+        webbrowser.open(f"https://www.google.com/search?q={query}")
+        return f"Searching for {query}"
+
+    # =====================================================
+    # 🌐 WEB OPEN (STRICT MATCH)
+    # =====================================================
     if intent == "open_youtube":
         webbrowser.open("https://youtube.com")
         return "Opening YouTube"
@@ -20,23 +109,22 @@ def handle_intent(intent, text):
         webbrowser.open("https://github.com")
         return "Opening GitHub"
 
-    # 🔍 SEARCH (dynamic)
-    if intent == "search":
-        # extract query after keywords
-        words = ["search", "find", "look up", "search for"]
-        query = text
+    if intent == "open_stackoverflow":
+        webbrowser.open("https://stackoverflow.com")
+        return "Opening StackOverflow"
 
-        for w in words:
-            if w in text:
-                query = text.split(w)[-1].strip()
+    # =====================================================
+    # 💻 SYSTEM APPS (FIXED CMD BUG)
+    # =====================================================
+    if intent == "open_cmd":
+        os.system('start "" cmd')
+        return "Opening Command Prompt"
 
-        if not query:
-            return "What should I search?"
+    if intent == "open_chrome":
+        # ✅ FIX: no accidental cmd trigger
+        os.system('start "" chrome')
+        return "Opening Chrome"
 
-        webbrowser.open(f"https://www.google.com/search?q={query}")
-        return f"Searching for {query}"
-
-    # 💻 SYSTEM APPS
     if intent == "open_notepad":
         os.system("notepad")
         return "Opening Notepad"
@@ -45,25 +133,17 @@ def handle_intent(intent, text):
         os.system("calc")
         return "Opening Calculator"
 
-    if intent == "open_cmd":
-        os.system("start cmd")
-        return "Opening Command Prompt"
+    if intent == "open_task_manager":
+        os.system("taskmgr")
+        return "Opening Task Manager"
 
-    if intent == "open_vscode":
-        try:
-            os.system("code")
-            return "Opening VS Code"
-        except:
-            return "VS Code not found"
+    if intent == "open_control_panel":
+        os.system("control")
+        return "Opening Control Panel"
 
-    if intent == "open_chrome":
-        try:
-            os.system("start chrome")
-            return "Opening Chrome"
-        except:
-            return "Chrome not found"
-
-    # 📁 FILES
+    # =====================================================
+    # 📁 FILE SYSTEM
+    # =====================================================
     if intent == "open_downloads":
         os.startfile(os.path.expanduser("~/Downloads"))
         return "Opening Downloads"
@@ -72,16 +152,68 @@ def handle_intent(intent, text):
         os.startfile(os.path.expanduser("~/Documents"))
         return "Opening Documents"
 
+    if intent == "open_desktop":
+        os.startfile(os.path.expanduser("~/Desktop"))
+        return "Opening Desktop"
+
+    # =====================================================
     # 🔊 SYSTEM CONTROL
+    # =====================================================
     if intent == "shutdown":
         os.system("shutdown /s /t 5")
-        return "Shutting down in 5 seconds"
+        return "Shutting down"
 
     if intent == "restart":
         os.system("shutdown /r /t 5")
-        return "Restarting in 5 seconds"
+        return "Restarting"
 
+    if intent == "lock":
+        os.system("rundll32.exe user32.dll,LockWorkStation")
+        return "Locking system"
+
+    # =====================================================
+    # 🔊 VOLUME CONTROL (FIXED + STATEFUL)
+    # =====================================================
+    if intent in ["volume_up", "volume_down", "mute"]:
+
+        if not tool_exists("nircmd.exe"):
+            return "Install NirCmd to control volume."
+
+        # 🔥 special keywords
+        if "max" in text:
+            os.system("nircmd setsysvolume 65535")
+            config.LAST_VOLUME_ACTION = "up"
+            return "Max volume"
+
+        if "zero" in text or "minimum" in text:
+            os.system("nircmd setsysvolume 0")
+            config.LAST_VOLUME_ACTION = "down"
+            return "Volume set to 0"
+
+        if "unmute" in text:
+            os.system("nircmd mutesysvolume 0")
+            return "Unmuted"
+
+        if intent == "mute":
+            os.system("nircmd mutesysvolume 1")
+            return "Muted"
+
+        amount = extract_number(text)
+
+        # ✅ FIX: correct direction
+        if intent == "volume_up":
+            os.system(f"nircmd changesysvolume {amount * 655}")
+            config.LAST_VOLUME_ACTION = "up"
+            return f"Volume increased by {amount}"
+
+        if intent == "volume_down":
+            os.system(f"nircmd changesysvolume -{amount * 655}")
+            config.LAST_VOLUME_ACTION = "down"
+            return f"Volume decreased by {amount}"
+
+    # =====================================================
     # ⏰ TIME / DATE
+    # =====================================================
     if intent == "time":
         return datetime.now().strftime("Current time: %H:%M")
 
@@ -91,26 +223,42 @@ def handle_intent(intent, text):
     return None
 
 
-# 🔥 FALLBACK NLP (if intent not detected)
-def fallback_nlp(text):
+# =========================================================
+# 🔥 FALLBACK NLP
+# =========================================================
+def fallback_nlp(text, last_query=None):
 
-    # very loose understanding
-    if "youtube" in text:
-        webbrowser.open("https://youtube.com")
-        return "Opening YouTube"
+    # YouTube search fallback
+    if "youtube" in text and "search" in text:
+        query = extract_query(text)
 
-    if "google" in text:
-        webbrowser.open("https://google.com")
-        return "Opening Google"
+        if query in ["it", "this", "that"] and last_query:
+            query = last_query
+
+        webbrowser.open(
+            f"https://www.youtube.com/results?search_query={query}")
+        return f"Searching YouTube for {query}"
+
+    # basic search fallback
+    if text.startswith("search "):
+        query = text.replace("search", "").strip()
+
+        if query in ["it", "this", "that"] and last_query:
+            query = last_query
+
+        webbrowser.open(f"https://www.google.com/search?q={query}")
+        return f"Searching for {query}"
 
     return None
 
 
-# 🔥 MAIN COMMAND FUNCTION
-def execute_command(text, intent=None):
+# =========================================================
+# 🔥 MAIN EXECUTOR
+# =========================================================
+def execute_command(text, intent=None, last_query=None):
     text = text.lower().strip()
 
-    # 🔥 AI MODE CONTROL (still direct)
+    # AI MODE
     if "enable ai" in text:
         config.AI_MODE = True
         return "AI mode enabled"
@@ -119,11 +267,10 @@ def execute_command(text, intent=None):
         config.AI_MODE = False
         return "AI mode disabled"
 
-    # 🔥 1. Try intent-based execution
+    # EXECUTION
     if intent:
-        result = handle_intent(intent, text)
+        result = handle_intent(intent, text, last_query)
         if result:
             return result
 
-    # 🔥 2. Fallback NLP
-    return fallback_nlp(text)
+    return fallback_nlp(text, last_query)

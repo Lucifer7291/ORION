@@ -1,5 +1,6 @@
 # config.py
 
+LAST_VOLUME_ACTION = None
 AI_MODE = False   # 🔴 OFF by default
 
 # Future use
