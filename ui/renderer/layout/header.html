@@ -1,0 +1,76 @@
+<!-- ═══════════════════════════════════════════════════════════════
+     ORION — Top Header Fragment
+     Injected into #orion-header by header.js
+═══════════════════════════════════════════════════════════════ -->
+
+<!-- Left: Page Title Breadcrumb -->
+<div class="header-left">
+    <h1 class="header-page-title" id="header-page-title">Dashboard</h1>
+</div>
+
+<!-- Centre: Top Navigation Tabs -->
+<nav class="header-tabs" aria-label="Top navigation" id="header-tabs">
+    <a class="header-tab" href="#dashboard" data-page="dashboard">Dashboard</a>
+    <a class="header-tab" href="#commands" data-page="commands">Commands</a>
+    <a class="header-tab active" href="#widgets" data-page="widgets">Widgets</a>
+    <a class="header-tab" href="#automation" data-page="automation">Automation</a>
+    <a class="header-tab" href="#reminders" data-page="reminders">Reminders</a>
+    <a class="header-tab" href="#apps" data-page="apps">Apps</a>
+    <a class="header-tab" href="#settings" data-page="settings">Settings</a>
+</nav>
+
+<!-- Right: Status Cluster -->
+<div class="header-right">
+
+    <!-- Version selector -->
+    <div class="header-version-select" id="header-version-select">
+        <span class="version-label" id="header-version-label">Orion v2.3</span>
+        <svg class="version-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="2.5">
+            <polyline points="6 9 12 15 18 9" />
+        </svg>
+        <ul class="version-dropdown" id="version-dropdown" hidden>
+            <li data-version="v2.3" class="active">v2.3 — Stable</li>
+            <li data-version="v2.2">v2.2 — Legacy</li>
+            <li data-version="v2.4-beta">v2.4 — Beta</li>
+        </ul>
+    </div>
+
+    <!-- Live Clock -->
+    <div class="header-clock" id="header-clock" aria-label="Current time">
+        <svg class="clock-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="2">
+            <circle cx="12" cy="12" r="10" />
+            <polyline points="12 6 12 12 16 14" />
+        </svg>
+        <span id="header-time">09:45</span>
+    </div>
+
+    <!-- Notification Bell -->
+    <button class="header-icon-btn" id="header-bell" title="Notifications" aria-label="Notifications">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" />
+            <path d="M13.73 21a2 2 0 0 1-3.46 0" />
+        </svg>
+        <span class="bell-badge" id="bell-badge" hidden>3</span>
+    </button>
+
+    <!-- Settings shortcut -->
+    <button class="header-icon-btn" id="header-settings-btn" title="Quick Settings" aria-label="Settings">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="3" />
+            <path
+                d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z" />
+        </svg>
+    </button>
+
+    <!-- Electron Window Controls (shown only in Electron) -->
+    <div class="electron-controls" id="electron-win-controls" aria-label="Window controls">
+        <button class="win-btn win-min" id="win-minimize" title="Minimize" aria-label="Minimize">─</button>
+        <button class="win-btn win-max" id="win-maximize" title="Maximize" aria-label="Maximize">□</button>
+        <button class="win-btn win-close" id="win-close" title="Close" aria-label="Close">✕</button>
+    </div>
+
+</div><!-- /.header-right -->

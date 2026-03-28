@@ -1,0 +1,184 @@
+<!-- ORION Reminders Page -->
+<section id="page-reminders" class="page" data-page="reminders">
+
+    <div class="page-header">
+        <div class="page-title-block">
+            <h1 class="page-title">Reminders</h1>
+            <p class="page-subtitle">Manage your scheduled reminders and alerts</p>
+        </div>
+        <div class="page-actions">
+            <button class="btn-orion btn-primary" id="add-reminder-btn">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="12" y1="5" x2="12" y2="19" />
+                    <line x1="5" y1="12" x2="19" y2="12" />
+                </svg>
+                Add Reminder
+            </button>
+        </div>
+    </div>
+
+    <!-- Add Reminder Form (hidden by default) -->
+    <div class="add-reminder-form dash-card" id="reminder-form" style="display:none;">
+        <h3 class="form-title">New Reminder</h3>
+        <div class="form-grid">
+            <div class="form-field">
+                <label>Label</label>
+                <input type="text" class="orion-input" id="reminder-label"
+                    placeholder="e.g. Lecture, Meeting, Exercise">
+            </div>
+            <div class="form-field">
+                <label>Time</label>
+                <input type="time" class="orion-input" id="reminder-time" value="08:00">
+            </div>
+            <div class="form-field">
+                <label>Date</label>
+                <input type="date" class="orion-input" id="reminder-date">
+            </div>
+            <div class="form-field">
+                <label>Repeat</label>
+                <select class="orion-select" id="reminder-repeat">
+                    <option value="none">No repeat</option>
+                    <option value="daily">Daily</option>
+                    <option value="weekdays">Weekdays</option>
+                    <option value="weekly">Weekly</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-field full-width">
+            <label>Note (optional)</label>
+            <input type="text" class="orion-input" id="reminder-note" placeholder="Extra details...">
+        </div>
+        <div class="form-actions">
+            <button class="btn-orion btn-ghost" id="cancel-reminder-btn">Cancel</button>
+            <button class="btn-orion btn-primary" id="save-reminder-btn">Save Reminder</button>
+        </div>
+    </div>
+
+    <!-- Reminder Filters -->
+    <div class="reminders-filters">
+        <button class="filter-btn active" data-filter="all">All</button>
+        <button class="filter-btn" data-filter="active">Active</button>
+        <button class="filter-btn" data-filter="completed">Completed</button>
+        <button class="filter-btn" data-filter="today">Today</button>
+    </div>
+
+    <!-- Reminders List -->
+    <div class="reminders-list-container">
+        <div class="reminders-list" id="reminders-list">
+
+            <!-- Today Section -->
+            <div class="reminders-date-group">
+                <h4 class="reminders-date-label">Today</h4>
+                <div class="reminder-card active" data-id="1">
+                    <div class="reminder-card-left">
+                        <div class="reminder-status-icon active">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2.5">
+                                <polyline points="20 6 9 17 4 12" />
+                            </svg>
+                        </div>
+                        <div class="reminder-info">
+                            <span class="reminder-card-label">Lecture</span>
+                            <span class="reminder-card-note">Don't forget to review notes</span>
+                        </div>
+                    </div>
+                    <div class="reminder-card-right">
+                        <span class="reminder-card-time">04:00</span>
+                        <span class="reminder-card-repeat">Daily</span>
+                        <div class="reminder-card-actions">
+                            <button class="btn-icon-sm reminder-edit-btn" data-id="1" title="Edit">✎</button>
+                            <button class="btn-icon-sm reminder-delete-btn" data-id="1" title="Delete">✕</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="reminder-card" data-id="2">
+                    <div class="reminder-card-left">
+                        <div class="reminder-status-icon missed">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2.5">
+                                <line x1="18" y1="6" x2="6" y2="18" />
+                                <line x1="6" y1="6" x2="18" y2="18" />
+                            </svg>
+                        </div>
+                        <div class="reminder-info">
+                            <span class="reminder-card-label">Meeting</span>
+                            <span class="reminder-card-note">Team standup</span>
+                        </div>
+                    </div>
+                    <div class="reminder-card-right">
+                        <span class="reminder-card-time">09:30</span>
+                        <span class="reminder-card-repeat">Weekdays</span>
+                        <div class="reminder-card-actions">
+                            <button class="btn-icon-sm reminder-edit-btn" data-id="2" title="Edit">✎</button>
+                            <button class="btn-icon-sm reminder-delete-btn" data-id="2" title="Delete">✕</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="reminder-card" data-id="3">
+                    <div class="reminder-card-left">
+                        <div class="reminder-status-icon missed">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2.5">
+                                <line x1="18" y1="6" x2="6" y2="18" />
+                                <line x1="6" y1="6" x2="18" y2="18" />
+                            </svg>
+                        </div>
+                        <div class="reminder-info">
+                            <span class="reminder-card-label">Exercise</span>
+                            <span class="reminder-card-note">Morning workout session</span>
+                        </div>
+                    </div>
+                    <div class="reminder-card-right">
+                        <span class="reminder-card-time">08:30</span>
+                        <span class="reminder-card-repeat">Daily</span>
+                        <div class="reminder-card-actions">
+                            <button class="btn-icon-sm reminder-edit-btn" data-id="3" title="Edit">✎</button>
+                            <button class="btn-icon-sm reminder-delete-btn" data-id="3" title="Delete">✕</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tomorrow Section -->
+            <div class="reminders-date-group">
+                <h4 class="reminders-date-label">Tomorrow</h4>
+                <div class="reminder-card upcoming" data-id="4">
+                    <div class="reminder-card-left">
+                        <div class="reminder-status-icon upcoming">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <circle cx="12" cy="12" r="10" />
+                                <polyline points="12 6 12 12 16 14" />
+                            </svg>
+                        </div>
+                        <div class="reminder-info">
+                            <span class="reminder-card-label">Doctor Appointment</span>
+                            <span class="reminder-card-note">City Hospital — Block C</span>
+                        </div>
+                    </div>
+                    <div class="reminder-card-right">
+                        <span class="reminder-card-time">11:00</span>
+                        <span class="reminder-card-repeat">Once</span>
+                        <div class="reminder-card-actions">
+                            <button class="btn-icon-sm reminder-edit-btn" data-id="4" title="Edit">✎</button>
+                            <button class="btn-icon-sm reminder-delete-btn" data-id="4" title="Delete">✕</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div><!-- /.reminders-list -->
+    </div>
+
+    <!-- Voice Add Reminder -->
+    <div class="voice-add-hint">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z" />
+            <path d="M19 10v2a7 7 0 0 1-14 0v-2" />
+        </svg>
+        <span>Say <em>"Set reminder for [task] at [time]"</em> to add instantly</span>
+    </div>
+
+</section>

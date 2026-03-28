@@ -1,0 +1,216 @@
+<!-- ORION Automation Page -->
+<section id="page-automation" class="page" data-page="automation">
+
+    <div class="page-header">
+        <div class="page-title-block">
+            <h1 class="page-title">Automation</h1>
+            <p class="page-subtitle">Build and manage chain task pipelines</p>
+        </div>
+        <div class="page-actions">
+            <button class="btn-orion btn-ghost" id="automation-import-btn">Import</button>
+            <button class="btn-orion btn-primary" id="automation-new-btn">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="12" y1="5" x2="12" y2="19" />
+                    <line x1="5" y1="12" x2="19" y2="12" />
+                </svg>
+                New Pipeline
+            </button>
+        </div>
+    </div>
+
+    <!-- Pipeline Builder -->
+    <div class="pipeline-builder" id="pipeline-builder" style="display:none;">
+        <div class="builder-header">
+            <input type="text" class="orion-input pipeline-name-input" id="pipeline-name"
+                placeholder="Pipeline name...">
+            <div class="builder-actions">
+                <button class="btn-orion btn-ghost" id="builder-cancel-btn">Cancel</button>
+                <button class="btn-orion btn-ghost" id="builder-test-btn">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polygon points="5 3 19 12 5 21 5 3" />
+                    </svg>
+                    Test Run
+                </button>
+                <button class="btn-orion btn-primary" id="builder-save-btn">Save Pipeline</button>
+            </div>
+        </div>
+
+        <!-- Steps List -->
+        <div class="pipeline-steps" id="pipeline-steps">
+            <div class="pipeline-steps-empty" id="steps-empty">
+                <span>Add steps below to build your automation pipeline</span>
+            </div>
+        </div>
+
+        <!-- Add Step -->
+        <div class="add-step-row">
+            <select class="orion-select" id="step-action-select">
+                <option value="">— Select action —</option>
+                <option value="open_app">Open App</option>
+                <option value="open_browser">Open URL in Browser</option>
+                <option value="search">Search on Web</option>
+                <option value="type_text">Type Text</option>
+                <option value="click">Click Element</option>
+                <option value="wait">Wait (seconds)</option>
+                <option value="play_music">Play Music</option>
+                <option value="send_whatsapp">Send WhatsApp</option>
+                <option value="send_email">Send Email</option>
+                <option value="shutdown">Shutdown / Restart PC</option>
+                <option value="voice_say">ORION Says (TTS)</option>
+                <option value="run_command">Run Custom Command</option>
+            </select>
+            <button class="btn-orion btn-ghost" id="add-step-btn">Add Step</button>
+        </div>
+    </div>
+
+    <!-- Pipeline Cards -->
+    <div class="automation-grid" id="automation-grid">
+
+        <div class="pipeline-card" data-id="1">
+            <div class="pipeline-card-header">
+                <div class="pipeline-icon">⚡</div>
+                <div class="pipeline-meta">
+                    <h3 class="pipeline-title">Morning Routine</h3>
+                    <span class="pipeline-steps-count">4 steps</span>
+                </div>
+                <label class="toggle-switch small">
+                    <input type="checkbox" class="pipeline-toggle" data-id="1" checked>
+                    <span class="toggle-slider"></span>
+                </label>
+            </div>
+            <div class="pipeline-steps-preview">
+                <span class="step-preview-tag">Open Brave</span>
+                <span class="step-arrow">→</span>
+                <span class="step-preview-tag">YouTube News</span>
+                <span class="step-arrow">→</span>
+                <span class="step-preview-tag">Play Music</span>
+                <span class="step-arrow">→</span>
+                <span class="step-preview-tag">Show Calendar</span>
+            </div>
+            <div class="pipeline-card-footer">
+                <span class="pipeline-trigger">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10" />
+                        <polyline points="12 6 12 12 16 14" />
+                    </svg>
+                    Daily · 07:00
+                </span>
+                <div class="pipeline-card-actions">
+                    <button class="btn-icon-sm pipeline-run-btn" data-id="1" title="Run now">▶</button>
+                    <button class="btn-icon-sm pipeline-edit-btn" data-id="1" title="Edit">✎</button>
+                    <button class="btn-icon-sm pipeline-del-btn" data-id="1" title="Delete">✕</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="pipeline-card" data-id="2">
+            <div class="pipeline-card-header">
+                <div class="pipeline-icon">🎵</div>
+                <div class="pipeline-meta">
+                    <h3 class="pipeline-title">Study Mode</h3>
+                    <span class="pipeline-steps-count">3 steps</span>
+                </div>
+                <label class="toggle-switch small">
+                    <input type="checkbox" class="pipeline-toggle" data-id="2">
+                    <span class="toggle-slider"></span>
+                </label>
+            </div>
+            <div class="pipeline-steps-preview">
+                <span class="step-preview-tag">Close Distractions</span>
+                <span class="step-arrow">→</span>
+                <span class="step-preview-tag">Play Lo-Fi</span>
+                <span class="step-arrow">→</span>
+                <span class="step-preview-tag">Open Notion</span>
+            </div>
+            <div class="pipeline-card-footer">
+                <span class="pipeline-trigger">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z" />
+                    </svg>
+                    Voice trigger
+                </span>
+                <div class="pipeline-card-actions">
+                    <button class="btn-icon-sm pipeline-run-btn" data-id="2" title="Run now">▶</button>
+                    <button class="btn-icon-sm pipeline-edit-btn" data-id="2" title="Edit">✎</button>
+                    <button class="btn-icon-sm pipeline-del-btn" data-id="2" title="Delete">✕</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="pipeline-card" data-id="3">
+            <div class="pipeline-card-header">
+                <div class="pipeline-icon">🌙</div>
+                <div class="pipeline-meta">
+                    <h3 class="pipeline-title">Night Shutdown</h3>
+                    <span class="pipeline-steps-count">5 steps</span>
+                </div>
+                <label class="toggle-switch small">
+                    <input type="checkbox" class="pipeline-toggle" data-id="3" checked>
+                    <span class="toggle-slider"></span>
+                </label>
+            </div>
+            <div class="pipeline-steps-preview">
+                <span class="step-preview-tag">Save Files</span>
+                <span class="step-arrow">→</span>
+                <span class="step-preview-tag">WhatsApp Goodnight</span>
+                <span class="step-arrow">→</span>
+                <span class="step-preview-tag">Shutdown PC</span>
+            </div>
+            <div class="pipeline-card-footer">
+                <span class="pipeline-trigger">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10" />
+                        <polyline points="12 6 12 12 16 14" />
+                    </svg>
+                    Daily · 23:30
+                </span>
+                <div class="pipeline-card-actions">
+                    <button class="btn-icon-sm pipeline-run-btn" data-id="3" title="Run now">▶</button>
+                    <button class="btn-icon-sm pipeline-edit-btn" data-id="3" title="Edit">✎</button>
+                    <button class="btn-icon-sm pipeline-del-btn" data-id="3" title="Delete">✕</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- New Pipeline Placeholder -->
+        <div class="pipeline-card new-pipeline-placeholder" id="new-pipeline-placeholder">
+            <button class="new-pipeline-btn" id="new-pipeline-card-btn">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <line x1="12" y1="5" x2="12" y2="19" />
+                    <line x1="5" y1="12" x2="19" y2="12" />
+                </svg>
+                <span>New Pipeline</span>
+            </button>
+        </div>
+
+    </div><!-- /.automation-grid -->
+
+    <!-- Execution Log -->
+    <div class="dash-card execution-log-card">
+        <div class="dash-card-header">
+            <h3>Execution Log</h3>
+            <button class="btn-icon-sm" id="clear-exec-log-btn" title="Clear log">✕</button>
+        </div>
+        <div class="exec-log-list" id="exec-log-list">
+            <div class="exec-log-item success">
+                <span class="exec-log-icon">✓</span>
+                <span class="exec-log-name">Morning Routine</span>
+                <span class="exec-log-status">Completed (4/4 steps)</span>
+                <span class="exec-log-time">Today 07:00</span>
+            </div>
+            <div class="exec-log-item warning">
+                <span class="exec-log-icon">⚠</span>
+                <span class="exec-log-name">Study Mode</span>
+                <span class="exec-log-status">Partial (2/3 steps — Notion not found)</span>
+                <span class="exec-log-time">Yesterday 14:30</span>
+            </div>
+            <div class="exec-log-item success">
+                <span class="exec-log-icon">✓</span>
+                <span class="exec-log-name">Night Shutdown</span>
+                <span class="exec-log-status">Completed (5/5 steps)</span>
+                <span class="exec-log-time">Yesterday 23:30</span>
+            </div>
+        </div>
+    </div>
+
+</section>

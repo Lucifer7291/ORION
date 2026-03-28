@@ -1,264 +1,93 @@
-import webbrowser
-import os
-import re
-from datetime import datetime
+# =========================================================
+# ORION COMMAND ENGINE
+# core/commands.py
+# =========================================================
+
+import importlib
+import pkgutil
 import config
 
 
 # =========================================================
-# 🔥 GLOBAL STATE (IMPORTANT)
+# 🔥 GLOBAL COMMAND REGISTRY
 # =========================================================
-if not hasattr(config, "LAST_VOLUME_ACTION"):
-    config.LAST_VOLUME_ACTION = None
+COMMAND_REGISTRY = {}
 
-
-# =========================================================
-# 🔥 Helper: check tool existence
-# =========================================================
-def tool_exists(tool):
-    return any(
-        os.access(os.path.join(path, tool), os.X_OK)
-        for path in os.environ["PATH"].split(os.pathsep)
-    )
+LOADED_MODULES = []
 
 
 # =========================================================
-# 🔥 Extract search query
+# 🔥 REGISTER COMMAND
+# Each module calls this
 # =========================================================
-def extract_query(text):
-    words = ["search", "find", "look up", "search for"]
-    for w in words:
-        if w in text:
-            return text.split(w)[-1].strip()
-    return ""
+def register_command(intent, handler):
+    COMMAND_REGISTRY[intent] = handler
 
 
 # =========================================================
-# 🔥 Extract number
+# 🔥 AUTO LOAD COMMAND MODULES
 # =========================================================
-def extract_number(text, default=10):
-    match = re.search(r"\d+", text)
-    return int(match.group()) if match else default
+def load_commands():
 
+    COMMAND_REGISTRY.clear()
+    LOADED_MODULES.clear()
 
-# =========================================================
-# 🔥 MAIN INTENT HANDLER
-# =========================================================
-def handle_intent(intent, text, last_query=None):
+    packages = [
+        "commands.web_commands",
+        "commands.app_commands",
+        "commands.system_commands",
+        "commands.default_commands",
+    ]
 
-    # =====================================================
-    # 🔥 "MORE" COMMAND (STATEFUL)
-    # =====================================================
-    if text in ["more", "increase more", "decrease more"]:
-        if not tool_exists("nircmd.exe"):
-            return "Install NirCmd to control volume."
+    for package in packages:
 
-        if config.LAST_VOLUME_ACTION == "up":
-            os.system(f"nircmd changesysvolume {10 * 655}")
-            return "Volume increased by 10"
+        try:
+            module = importlib.import_module(package)
 
-        elif config.LAST_VOLUME_ACTION == "down":
-            os.system(f"nircmd changesysvolume -{10 * 655}")
-            return "Volume decreased by 10"
+            for _, name, _ in pkgutil.iter_modules(module.__path__):
 
-        return "Nothing to repeat."
+                module_path = f"{package}.{name}"
 
-    # =====================================================
-    # 🔥 COMBINED YOUTUBE SEARCH (NO DOUBLE TAB)
-    # =====================================================
-    if "youtube" in text and "search" in text:
-        query = extract_query(text)
+                try:
+                    mod = importlib.import_module(module_path)
 
-        if query in ["it", "this", "that"] and last_query:
-            query = last_query
+                    # plugin registration hook
+                    if hasattr(mod, "register"):
+                        mod.register(register_command)
 
-        if not query:
-            return "What should I search on YouTube?"
+                    LOADED_MODULES.append(module_path)
 
-        webbrowser.open(
-            f"https://www.youtube.com/results?search_query={query}")
-        return f"Searching YouTube for {query}"
+                except Exception as e:
+                    print(f"[Command Module Error] {module_path} -> {e}")
 
-    # =====================================================
-    # 🔍 GOOGLE SEARCH
-    # =====================================================
-    if intent == "search":
-        query = extract_query(text)
-
-        if query in ["it", "this", "that"] and last_query:
-            query = last_query
-
-        if not query:
-            return "What should I search?"
-
-        webbrowser.open(f"https://www.google.com/search?q={query}")
-        return f"Searching for {query}"
-
-    # =====================================================
-    # 🌐 WEB OPEN (STRICT MATCH)
-    # =====================================================
-    if intent == "open_youtube":
-        webbrowser.open("https://youtube.com")
-        return "Opening YouTube"
-
-    if intent == "open_google":
-        webbrowser.open("https://google.com")
-        return "Opening Google"
-
-    if intent == "open_github":
-        webbrowser.open("https://github.com")
-        return "Opening GitHub"
-
-    if intent == "open_stackoverflow":
-        webbrowser.open("https://stackoverflow.com")
-        return "Opening StackOverflow"
-
-    # =====================================================
-    # 💻 SYSTEM APPS (FIXED CMD BUG)
-    # =====================================================
-    if intent == "open_cmd":
-        os.system('start "" cmd')
-        return "Opening Command Prompt"
-
-    if intent == "open_chrome":
-        # ✅ FIX: no accidental cmd trigger
-        os.system('start "" chrome')
-        return "Opening Chrome"
-
-    if intent == "open_notepad":
-        os.system("notepad")
-        return "Opening Notepad"
-
-    if intent == "open_calculator":
-        os.system("calc")
-        return "Opening Calculator"
-
-    if intent == "open_task_manager":
-        os.system("taskmgr")
-        return "Opening Task Manager"
-
-    if intent == "open_control_panel":
-        os.system("control")
-        return "Opening Control Panel"
-
-    # =====================================================
-    # 📁 FILE SYSTEM
-    # =====================================================
-    if intent == "open_downloads":
-        os.startfile(os.path.expanduser("~/Downloads"))
-        return "Opening Downloads"
-
-    if intent == "open_documents":
-        os.startfile(os.path.expanduser("~/Documents"))
-        return "Opening Documents"
-
-    if intent == "open_desktop":
-        os.startfile(os.path.expanduser("~/Desktop"))
-        return "Opening Desktop"
-
-    # =====================================================
-    # 🔊 SYSTEM CONTROL
-    # =====================================================
-    if intent == "shutdown":
-        os.system("shutdown /s /t 5")
-        return "Shutting down"
-
-    if intent == "restart":
-        os.system("shutdown /r /t 5")
-        return "Restarting"
-
-    if intent == "lock":
-        os.system("rundll32.exe user32.dll,LockWorkStation")
-        return "Locking system"
-
-    # =====================================================
-    # 🔊 VOLUME CONTROL (FIXED + STATEFUL)
-    # =====================================================
-    if intent in ["volume_up", "volume_down", "mute"]:
-
-        if not tool_exists("nircmd.exe"):
-            return "Install NirCmd to control volume."
-
-        # 🔥 special keywords
-        if "max" in text:
-            os.system("nircmd setsysvolume 65535")
-            config.LAST_VOLUME_ACTION = "up"
-            return "Max volume"
-
-        if "zero" in text or "minimum" in text:
-            os.system("nircmd setsysvolume 0")
-            config.LAST_VOLUME_ACTION = "down"
-            return "Volume set to 0"
-
-        if "unmute" in text:
-            os.system("nircmd mutesysvolume 0")
-            return "Unmuted"
-
-        if intent == "mute":
-            os.system("nircmd mutesysvolume 1")
-            return "Muted"
-
-        amount = extract_number(text)
-
-        # ✅ FIX: correct direction
-        if intent == "volume_up":
-            os.system(f"nircmd changesysvolume {amount * 655}")
-            config.LAST_VOLUME_ACTION = "up"
-            return f"Volume increased by {amount}"
-
-        if intent == "volume_down":
-            os.system(f"nircmd changesysvolume -{amount * 655}")
-            config.LAST_VOLUME_ACTION = "down"
-            return f"Volume decreased by {amount}"
-
-    # =====================================================
-    # ⏰ TIME / DATE
-    # =====================================================
-    if intent == "time":
-        return datetime.now().strftime("Current time: %H:%M")
-
-    if intent == "date":
-        return datetime.now().strftime("Today's date: %Y-%m-%d")
-
-    return None
+        except Exception as e:
+            print(f"[Command Package Error] {package} -> {e}")
 
 
 # =========================================================
-# 🔥 FALLBACK NLP
+# 🔥 RELOAD COMMANDS (Dashboard Feature)
 # =========================================================
-def fallback_nlp(text, last_query=None):
+def reload_commands():
+    load_commands()
+    return "Commands reloaded successfully"
 
-    # YouTube search fallback
-    if "youtube" in text and "search" in text:
-        query = extract_query(text)
 
-        if query in ["it", "this", "that"] and last_query:
-            query = last_query
-
-        webbrowser.open(
-            f"https://www.youtube.com/results?search_query={query}")
-        return f"Searching YouTube for {query}"
-
-    # basic search fallback
-    if text.startswith("search "):
-        query = text.replace("search", "").strip()
-
-        if query in ["it", "this", "that"] and last_query:
-            query = last_query
-
-        webbrowser.open(f"https://www.google.com/search?q={query}")
-        return f"Searching for {query}"
-
-    return None
+# =========================================================
+# 🔥 LOAD AT STARTUP
+# =========================================================
+load_commands()
 
 
 # =========================================================
 # 🔥 MAIN EXECUTOR
 # =========================================================
 def execute_command(text, intent=None, last_query=None):
+
     text = text.lower().strip()
 
-    # AI MODE
+    # -----------------------------------------------------
+    # AI MODE SWITCH
+    # -----------------------------------------------------
     if "enable ai" in text:
         config.AI_MODE = True
         return "AI mode enabled"
@@ -267,10 +96,140 @@ def execute_command(text, intent=None, last_query=None):
         config.AI_MODE = False
         return "AI mode disabled"
 
-    # EXECUTION
-    if intent:
-        result = handle_intent(intent, text, last_query)
-        if result:
-            return result
+    # -----------------------------------------------------
+    # HOT RELOAD (DEV POWER FEATURE)
+    # -----------------------------------------------------
+    if text in ["reload commands", "refresh commands"]:
+        return reload_commands()
 
-    return fallback_nlp(text, last_query)
+    # -----------------------------------------------------
+    # COMMAND EXECUTION
+    # -----------------------------------------------------
+    if intent and intent in COMMAND_REGISTRY:
+
+        try:
+            handler = COMMAND_REGISTRY[intent]
+            return handler(text, last_query)
+
+        except Exception as e:
+            return f"Command error: {e}"
+
+    return None  # =========================================================
+
+
+# ORION COMMAND ENGINE
+# core/commands.py
+# =========================================================
+
+import importlib
+import pkgutil
+import config
+
+
+# =========================================================
+# 🔥 GLOBAL COMMAND REGISTRY
+# =========================================================
+COMMAND_REGISTRY = {}
+
+LOADED_MODULES = []
+
+
+# =========================================================
+# 🔥 REGISTER COMMAND
+# Each module calls this
+# =========================================================
+def register_command(intent, handler):
+    COMMAND_REGISTRY[intent] = handler
+
+
+# =========================================================
+# 🔥 AUTO LOAD COMMAND MODULES
+# =========================================================
+def load_commands():
+
+    COMMAND_REGISTRY.clear()
+    LOADED_MODULES.clear()
+
+    packages = [
+        "commands.web_commands",
+        "commands.app_commands",
+        "commands.system_commands",
+        "commands.default_commands",
+    ]
+
+    for package in packages:
+
+        try:
+            module = importlib.import_module(package)
+
+            for _, name, _ in pkgutil.iter_modules(module.__path__):
+
+                module_path = f"{package}.{name}"
+
+                try:
+                    mod = importlib.import_module(module_path)
+
+                    # plugin registration hook
+                    if hasattr(mod, "register"):
+                        mod.register(register_command)
+
+                    LOADED_MODULES.append(module_path)
+
+                except Exception as e:
+                    print(f"[Command Module Error] {module_path} -> {e}")
+
+        except Exception as e:
+            print(f"[Command Package Error] {package} -> {e}")
+
+
+# =========================================================
+# 🔥 RELOAD COMMANDS (Dashboard Feature)
+# =========================================================
+def reload_commands():
+    load_commands()
+    return "Commands reloaded successfully"
+
+
+# =========================================================
+# 🔥 LOAD AT STARTUP
+# =========================================================
+load_commands()
+
+
+# =========================================================
+# 🔥 MAIN EXECUTOR
+# =========================================================
+def execute_command(text, intent=None, last_query=None):
+
+    text = text.lower().strip()
+
+    # -----------------------------------------------------
+    # AI MODE SWITCH
+    # -----------------------------------------------------
+    if "enable ai" in text:
+        config.AI_MODE = True
+        return "AI mode enabled"
+
+    if "disable ai" in text:
+        config.AI_MODE = False
+        return "AI mode disabled"
+
+    # -----------------------------------------------------
+    # HOT RELOAD (DEV POWER FEATURE)
+    # -----------------------------------------------------
+    if text in ["reload commands", "refresh commands"]:
+        return reload_commands()
+
+    # -----------------------------------------------------
+    # COMMAND EXECUTION
+    # -----------------------------------------------------
+    if intent and intent in COMMAND_REGISTRY:
+
+        try:
+            handler = COMMAND_REGISTRY[intent]
+            return handler(text, last_query)
+
+        except Exception as e:
+            return f"Command error: {e}"
+
+    return None

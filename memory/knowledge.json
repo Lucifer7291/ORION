@@ -1,0 +1,23 @@
+{
+    "python": {
+        "definition": "Python is a high-level programming language.",
+        "uses": "Used in web development, AI, automation.",
+        "creator": "Created by Guido van Rossum."
+    },
+    "html": {
+        "definition": "HTML is used to structure web pages.",
+        "uses": "Used for building websites."
+    },
+    "css": {
+        "definition": "CSS is used to style web pages.",
+        "uses": "Used for designing layouts and UI."
+    },
+    "javascript": {
+        "definition": "JavaScript is a programming language for web development.",
+        "uses": "Used for frontend and backend development."
+    },
+    "react": {
+        "definition": "React is a JavaScript library for building user interfaces.",
+        "uses": "Used for building modern web apps."
+    }
+}

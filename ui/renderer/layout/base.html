@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Dashboard — ORION</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;900&family=Rajdhani:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap"
+        rel="stylesheet" />
+
+    <!-- Icons (Feather via CDN) -->
+    <script src="https://unpkg.com/feather-icons/dist/feather.min.js" defer></script>
+
+    <!-- Global Styles -->
+    <link rel="stylesheet" href="assets/css/style.css" />
+
+    <!-- Component Styles -->
+    <link rel="stylesheet" href="src/components/card/card.css" />
+    <link rel="stylesheet" href="src/components/widget/widget.css" />
+    <link rel="stylesheet" href="src/components/modal/modal.css" />
+</head>
+
+<body class="orion-shell">
+
+    <!-- ── Electron custom drag region ── -->
+    <div class="electron-drag-region" id="electron-drag"></div>
+
+    <!-- ── Starfield background ── -->
+    <canvas id="starfield" aria-hidden="true"></canvas>
+
+    <!-- ── App Shell ── -->
+    <div class="app-shell" id="app-shell">
+
+        <!-- Sidebar (injected by sidebar.js) -->
+        <aside class="sidebar" id="orion-sidebar" role="navigation" aria-label="Main navigation">
+            <!-- sidebar.html content injected here -->
+        </aside>
+
+        <!-- Main Column -->
+        <div class="main-column">
+
+            <!-- Header (injected by header.js) -->
+            <header class="top-header" id="orion-header" role="banner">
+                <!-- header.html content injected here -->
+            </header>
+
+            <!-- Page Content -->
+            <main class="content-area" id="orion-content" role="main" aria-live="polite">
+                <!-- Active page HTML is injected here by router.js -->
+                <div class="loading-screen">
+                    <div class="loading-ring"></div>
+                    <p class="loading-text">Initializing ORION…</p>
+                </div>
+            </main>
+
+            <!-- Command Bar (always visible at bottom) -->
+            <div class="command-bar-wrapper" id="orion-command-bar">
+                <!-- command-bar.html injected here -->
+            </div>
+
+        </div><!-- /.main-column -->
+
+        <!-- Right Panel (injected by right-panel.js) -->
+        <aside class="right-panel" id="orion-right-panel" role="complementary" aria-label="ORION controls">
+            <!-- right-panel.html injected here -->
+        </aside>
+
+    </div><!-- /#app-shell -->
+
+    <!-- ── Global Modal Container ── -->
+    <div id="orion-modal-overlay" class="modal-overlay hidden" role="dialog" aria-modal="true">
+        <div id="orion-modal-box" class="modal-box"></div>
+    </div>
+
+    <!-- ── Toast / Notification ── -->
+    <div id="orion-toasts" class="toast-container" aria-live="assertive" aria-atomic="true"></div>
+
+    <!-- ── Starfield init ── -->
+    <script>
+        (function () {
+            const canvas = document.getElementById('starfield');
+            const ctx = canvas.getContext('2d');
+            let stars = [];
+            function resize() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            }
+            function makeStars(n) {
+                stars = Array.from({ length: n }, () => ({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height,
+                    r: Math.random() * 1.2 + 0.2,
+                    a: Math.random(),
+                    da: (Math.random() - 0.5) * 0.003,
+                }));
+            }
+            function draw() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                stars.forEach(s => {
+                    s.a = Math.max(0.05, Math.min(1, s.a + s.da));
+                    if (s.a <= 0.05 || s.a >= 1) s.da *= -1;
+                    ctx.beginPath();
+                    ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+                    ctx.fillStyle = `rgba(0,220,255,${s.a * 0.6})`;
+                    ctx.fill();
+                });
+                requestAnimationFrame(draw);
+            }
+            resize();
+            makeStars(180);
+            draw();
+            window.addEventListener('resize', () => { resize(); makeStars(180); });
+        })();
+    </script>
+
+    <!-- ── Boot ORION app ── -->
+    <script type="module" src="index.html"></script>
+    <!-- Note: index.html exports the boot() function; actual entry point below -->
+    <script type="module">
+        import { boot } from './src/core/api.js';
+        // boot() is called from the top-level index.html module
+        // This tag kept here as fallback reference.
+    </script>
+
+</body>
+
+</html>

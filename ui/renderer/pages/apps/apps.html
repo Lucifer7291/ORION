@@ -1,0 +1,106 @@
+<!-- ═══════════════════════════════════════════════════════════════
+     ORION — Apps Launcher Page
+     Matches the hexagonal HUD app grid from home_ui.jpeg
+═══════════════════════════════════════════════════════════════ -->
+
+<div class="page apps-page" id="page-apps">
+
+    <!-- Page Header -->
+    <div class="page-header">
+        <div>
+            <h1 class="page-title">Apps</h1>
+            <p class="page-subtitle">Launch, pin, and manage your applications</p>
+        </div>
+        <div class="page-header-actions">
+            <button class="orion-btn orion-btn--ghost" id="apps-add-btn">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="12" y1="5" x2="12" y2="19" />
+                    <line x1="5" y1="12" x2="19" y2="12" />
+                </svg>
+                Add App
+            </button>
+            <button class="orion-btn orion-btn--ghost" id="apps-scan-btn">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="11" cy="11" r="8" />
+                    <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                </svg>
+                Scan System
+            </button>
+        </div>
+    </div>
+
+    <!-- Search + Category Bar -->
+    <div class="apps-filter-bar">
+        <div class="search-wrap">
+            <svg class="search-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                stroke-width="2">
+                <circle cx="11" cy="11" r="8" />
+                <line x1="21" y1="21" x2="16.65" y2="16.65" />
+            </svg>
+            <input class="cmd-search-input" id="apps-search" type="text" placeholder="Search apps…" autocomplete="off"
+                spellcheck="false" aria-label="Search apps" />
+        </div>
+
+        <div class="cmd-filter-chips" id="apps-category-chips" role="group" aria-label="App categories">
+            <button class="chip chip--active" data-cat="all">All</button>
+            <button class="chip" data-cat="pinned">Pinned</button>
+            <button class="chip" data-cat="browsers">Browsers</button>
+            <button class="chip" data-cat="social">Social</button>
+            <button class="chip" data-cat="dev">Dev Tools</button>
+            <button class="chip" data-cat="system">System</button>
+            <button class="chip" data-cat="media">Media</button>
+        </div>
+    </div>
+
+    <!-- Pinned / Quick Launch (HUD ring reference) -->
+    <section class="apps-section" id="apps-pinned-section">
+        <h2 class="apps-section-title">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polygon
+                    points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+            </svg>
+            Quick Launch
+        </h2>
+        <div class="apps-hex-grid" id="apps-pinned-grid">
+            <!-- Hexagonal quick-launch tiles injected by apps.js -->
+        </div>
+    </section>
+
+    <!-- All Apps Grid -->
+    <section class="apps-section">
+        <h2 class="apps-section-title">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path
+                    d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
+            </svg>
+            All Apps
+            <span class="apps-count-badge" id="apps-count">0</span>
+        </h2>
+        <div class="apps-grid" id="apps-main-grid">
+            <!-- App cards injected by apps.js -->
+        </div>
+        <div class="apps-empty" id="apps-empty" hidden>
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--clr-cyan)" stroke-width="1.2">
+                <path
+                    d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
+            </svg>
+            <p>No apps found. Click <strong>Scan System</strong> to discover installed apps.</p>
+        </div>
+    </section>
+
+    <!-- Usage Stats -->
+    <section class="apps-section apps-usage-section">
+        <h2 class="apps-section-title">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="18" y1="20" x2="18" y2="10" />
+                <line x1="12" y1="20" x2="12" y2="4" />
+                <line x1="6" y1="20" x2="6" y2="14" />
+            </svg>
+            Most Used Today
+        </h2>
+        <div class="apps-usage-list" id="apps-usage-list">
+            <!-- Injected by apps.js -->
+        </div>
+    </section>
+
+</div><!-- /.apps-page -->

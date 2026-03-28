@@ -3,59 +3,43 @@
         "hi",
         "hello",
         "hey",
-        "hii",
         "good morning",
         "good evening",
         "good afternoon"
     ],
-    "identity": [
-        "who are you",
-        "what is your name",
-        "tell me about yourself"
-    ],
-    "status": [
-        "how are you",
-        "are you working",
-        "are you online",
-        "are you active"
-    ],
-    "thanks": [
-        "thanks",
-        "thank you",
-        "thx",
-        "thanks a lot"
-    ],
-    "farewell": [
-        "bye",
-        "goodbye",
-        "exit",
-        "see you",
-        "quit"
-    ],
-    "time": [
-        "time",
-        "what time is it",
-        "current time",
-        "tell me time"
-    ],
-    "date": [
-        "date",
-        "today date",
-        "what is today's date",
-        "current date"
-    ],
     "search": [
         "search",
-        "search for",
         "find",
-        "look up",
-        "look for"
+        "look up"
+    ],
+    "scan_apps": [
+        "scan apps",
+        "scan system apps",
+        "search apps",
+        "scan applications"
+    ],
+    "scan_progress": [
+        "scan progress",
+        "scan percentage",
+        "how much scan done",
+        "scan completion",
+        "scan percent"
+    ],
+    "scan_status": [
+        "scan status",
+        "is scan running",
+        "scanner status",
+        "scan state"
+    ],
+    "open_app": [
+        "open",
+        "launch",
+        "start"
     ],
     "open_youtube": [
         "open youtube",
         "start youtube",
-        "launch youtube",
-        "play youtube"
+        "launch youtube"
     ],
     "open_google": [
         "open google",
@@ -175,28 +159,20 @@
         "ram usage",
         "battery status"
     ],
-    "python": {
-        "definition": "Python is a high-level programming language.",
-        "uses": "Used in web development, AI, automation.",
-        "creator": "Created by Guido van Rossum."
-    },
-    "html": {
-        "definition": "HTML is used to structure web pages.",
-        "uses": "Used for building websites."
-    },
-    "css": {
-        "definition": "CSS is used to style web pages.",
-        "uses": "Used for designing layouts and UI."
-    },
-    "javascript": {
-        "definition": "JavaScript is a programming language for web development.",
-        "uses": "Used for frontend and backend development."
-    },
-    "react": {
-        "definition": "React is a JavaScript library for building user interfaces.",
-        "uses": "Used for building modern web apps."
-    },
-    "hi orion": "Hi Lucifer, how can I help you?",
-    "good": "Thanks",
-    "off": "exit"
+    "time": [
+        "time",
+        "what time is it"
+    ],
+    "date": [
+        "date",
+        "today date"
+    ],
+    "clear": [
+        "clear",
+        "clear screen"
+    ],
+    "sleep": [
+        "sleep",
+        "sleep pc"
+    ]
 }

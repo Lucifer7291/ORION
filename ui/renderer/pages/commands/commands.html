@@ -1,0 +1,131 @@
+<!-- ═══════════════════════════════════════════════════════════════
+     ORION — Commands Page
+     Voice command log, search, pin, replay, chain builder.
+═══════════════════════════════════════════════════════════════ -->
+
+<div class="page commands-page" id="page-commands">
+
+    <!-- Page Header -->
+    <div class="page-header">
+        <div>
+            <h1 class="page-title">Commands</h1>
+            <p class="page-subtitle">Full history of every command ORION has executed</p>
+        </div>
+        <div class="page-header-actions">
+            <button class="orion-btn orion-btn--ghost" id="cmd-export-btn">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                    <polyline points="7 10 12 15 17 10" />
+                    <line x1="12" y1="15" x2="12" y2="3" />
+                </svg>
+                Export
+            </button>
+            <button class="orion-btn orion-btn--danger" id="cmd-clear-btn">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="3 6 5 6 21 6" />
+                    <path d="M19 6l-1 14H6L5 6" />
+                    <path d="M10 11v6" />
+                    <path d="M14 11v6" />
+                </svg>
+                Clear All
+            </button>
+        </div>
+    </div>
+
+    <!-- Stats Row -->
+    <div class="cmd-stats-row">
+        <div class="cmd-stat-card">
+            <span class="cmd-stat-num" id="stat-total">0</span>
+            <span class="cmd-stat-label">Total Commands</span>
+        </div>
+        <div class="cmd-stat-card">
+            <span class="cmd-stat-num" id="stat-today">0</span>
+            <span class="cmd-stat-label">Today</span>
+        </div>
+        <div class="cmd-stat-card">
+            <span class="cmd-stat-num" id="stat-success">0%</span>
+            <span class="cmd-stat-label">Success Rate</span>
+        </div>
+        <div class="cmd-stat-card">
+            <span class="cmd-stat-num" id="stat-avg-time">0s</span>
+            <span class="cmd-stat-label">Avg. Response</span>
+        </div>
+    </div>
+
+    <!-- Filter + Search Bar -->
+    <div class="cmd-filter-bar">
+        <div class="search-wrap">
+            <svg class="search-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                stroke-width="2">
+                <circle cx="11" cy="11" r="8" />
+                <line x1="21" y1="21" x2="16.65" y2="16.65" />
+            </svg>
+            <input class="cmd-search-input" id="cmd-search" type="text" placeholder="Search commands…"
+                autocomplete="off" spellcheck="false" aria-label="Search commands" />
+        </div>
+
+        <div class="cmd-filter-chips" id="cmd-filter-chips" role="group" aria-label="Filter commands">
+            <button class="chip chip--active" data-filter="all">All</button>
+            <button class="chip" data-filter="voice">Voice</button>
+            <button class="chip" data-filter="typed">Typed</button>
+            <button class="chip" data-filter="automation">Automation</button>
+            <button class="chip" data-filter="failed">Failed</button>
+        </div>
+
+        <div class="cmd-sort-wrap">
+            <label class="visually-hidden" for="cmd-sort">Sort by</label>
+            <select class="orion-select" id="cmd-sort">
+                <option value="newest">Newest first</option>
+                <option value="oldest">Oldest first</option>
+                <option value="az">A → Z</option>
+                <option value="duration">Duration</option>
+            </select>
+        </div>
+    </div>
+
+    <!-- Command List -->
+    <div class="cmd-list-wrapper">
+        <ul class="cmd-list" id="cmd-list" role="list" aria-label="Command history">
+            <!-- Items injected by commands.js -->
+            <li class="cmd-empty" id="cmd-empty-state">
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--clr-cyan)" stroke-width="1.2">
+                    <polyline points="4 17 10 11 4 5" />
+                    <line x1="12" y1="19" x2="20" y2="19" />
+                </svg>
+                <p>No commands yet. Start talking to ORION.</p>
+            </li>
+        </ul>
+    </div>
+
+    <!-- Chain Builder Panel -->
+    <div class="chain-builder-panel" id="chain-builder">
+        <div class="chain-builder-header">
+            <h3 class="chain-title">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+                    <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+                </svg>
+                Chain Task Builder
+            </h3>
+            <span class="chain-step-count"><span id="chain-step-num">0</span> steps</span>
+        </div>
+
+        <div class="chain-steps" id="chain-steps">
+            <!-- Steps rendered by commands.js -->
+            <div class="chain-empty-msg">Drag commands here or click <strong>+ Add Step</strong></div>
+        </div>
+
+        <div class="chain-actions">
+            <button class="orion-btn orion-btn--ghost" id="chain-add-step">+ Add Step</button>
+            <button class="orion-btn orion-btn--primary" id="chain-run-btn" disabled>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polygon points="5 3 19 12 5 21 5 3" />
+                </svg>
+                Run Chain
+            </button>
+            <button class="orion-btn orion-btn--ghost" id="chain-save-btn" disabled>Save</button>
+            <button class="orion-btn orion-btn--danger" id="chain-clear-btn">Clear</button>
+        </div>
+    </div>
+
+</div><!-- /.commands-page -->

@@ -1,0 +1,127 @@
+{
+    "greeting": [
+        "Hello Lucifer 👋",
+        "Welcome back, Lucifer.",
+        "ORION online. How can I assist?",
+        "Greetings. Systems ready.",
+        "Hi there. Awaiting your command."
+    ],
+    "identity": [
+        "I am ORION, your AI system assistant.",
+        "ORION initialized — modular intelligence system active.",
+        "I am ORION, built to assist, automate, and evolve.",
+        "Your personal AI assistant — ORION."
+    ],
+    "status": [
+        "All systems operational.",
+        "Core modules functioning normally.",
+        "ORION running at optimal performance.",
+        "No anomalies detected."
+    ],
+    "thanks": [
+        "You're welcome.",
+        "Anytime, Lucifer.",
+        "Glad to help.",
+        "Always here to assist."
+    ],
+    "farewell": [
+        "Goodbye.",
+        "Shutting down interaction.",
+        "See you soon.",
+        "ORION standing by."
+    ],
+    "unknown": [
+        "I didn't understand that.",
+        "Can you rephrase your command?",
+        "Unknown instruction received.",
+        "I'm still learning. Try another command."
+    ],
+    "confirmation": [
+        "Done.",
+        "Task completed.",
+        "Execution successful.",
+        "Command finished."
+    ],
+    "cancel": [
+        "Operation cancelled.",
+        "Stopping current task.",
+        "Command aborted."
+    ],
+    "help": [
+        "You can ask me to open apps, search the web, manage system tasks, or learn new things.",
+        "Available modules: apps, web, system, basic commands.",
+        "Try commands like 'open chrome', 'scan apps', or 'search python tutorial'."
+    ],
+    "time_query": [
+        "Fetching current time...",
+        "Checking system clock...",
+        "Retrieving time information."
+    ],
+    "date_query": [
+        "Checking today's date...",
+        "Fetching calendar information."
+    ],
+    "scan_apps": [
+        "Scanning installed applications...",
+        "Searching system for available apps...",
+        "Application scan started."
+    ],
+    "open_app": [
+        "Launching application...",
+        "Opening requested program.",
+        "Executing app launch."
+    ],
+    "close_app": [
+        "Closing application...",
+        "Terminating program.",
+        "Application shutdown initiated."
+    ],
+    "web_search": [
+        "Searching the web...",
+        "Opening browser search.",
+        "Fetching online results."
+    ],
+    "youtube_search": [
+        "Opening YouTube search.",
+        "Searching videos on YouTube.",
+        "Launching YouTube results."
+    ],
+    "google_search": [
+        "Opening Google search.",
+        "Searching Google now.",
+        "Sending query to Google."
+    ],
+    "system_info": [
+        "Collecting system information.",
+        "Analyzing device status.",
+        "Retrieving hardware details."
+    ],
+    "cpu_status": [
+        "Checking CPU usage...",
+        "Monitoring processor performance."
+    ],
+    "memory_status": [
+        "Analyzing memory usage.",
+        "Checking RAM status."
+    ],
+    "battery_status": [
+        "Checking battery level.",
+        "Retrieving power information."
+    ],
+    "learn_mode": [
+        "Learning new information.",
+        "Memory updated successfully.",
+        "I will remember that."
+    ],
+    "motivation": [
+        "Keep building. Progress compounds.",
+        "Consistency beats motivation.",
+        "You are improving every day.",
+        "Execution creates mastery."
+    ],
+    "joke": [
+        "Why do programmers prefer dark mode? Because light attracts bugs.",
+        "I tried to debug reality, but the problem was human.",
+        "There are 10 types of people: those who understand binary and those who don't."
+    ]
+}

@@ -1,0 +1,581 @@
+<!-- ORION Settings Page -->
+<section id="page-settings" class="page" data-page="settings">
+
+    <div class="page-header">
+        <div class="page-title-block">
+            <h1 class="page-title">Settings</h1>
+            <p class="page-subtitle">Configure ORION preferences and permissions</p>
+        </div>
+        <div class="page-actions">
+            <button class="btn-orion btn-ghost" id="settings-reset-btn">Reset Defaults</button>
+            <button class="btn-orion btn-primary" id="settings-save-btn">Save Changes</button>
+        </div>
+    </div>
+
+    <div class="settings-layout">
+
+        <!-- Settings Sidebar Nav -->
+        <nav class="settings-nav" id="settings-nav">
+            <button class="settings-nav-item active" data-section="voice">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z" />
+                    <path d="M19 10v2a7 7 0 0 1-14 0v-2" />
+                </svg>
+                Voice & Audio
+            </button>
+            <button class="settings-nav-item" data-section="personality">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path
+                        d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+                </svg>
+                Personality & Memory
+            </button>
+            <button class="settings-nav-item" data-section="permissions">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+                    <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+                </svg>
+                Permissions
+            </button>
+            <button class="settings-nav-item" data-section="integrations">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="18" cy="5" r="3" />
+                    <circle cx="6" cy="12" r="3" />
+                    <circle cx="18" cy="19" r="3" />
+                    <line x1="8.59" y1="13.51" x2="15.42" y2="17.49" />
+                    <line x1="15.41" y1="6.51" x2="8.59" y2="10.49" />
+                </svg>
+                Integrations
+            </button>
+            <button class="settings-nav-item" data-section="appearance">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="3" />
+                    <path
+                        d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z" />
+                </svg>
+                Appearance
+            </button>
+            <button class="settings-nav-item" data-section="system">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="2" y="3" width="20" height="14" rx="2" ry="2" />
+                    <line x1="8" y1="21" x2="16" y2="21" />
+                    <line x1="12" y1="17" x2="12" y2="21" />
+                </svg>
+                System
+            </button>
+        </nav>
+
+        <!-- Settings Content Panels -->
+        <div class="settings-content" id="settings-content">
+
+            <!-- Voice & Audio -->
+            <div class="settings-panel active" id="section-voice">
+                <h2 class="section-title">Voice & Audio</h2>
+
+                <div class="settings-group">
+                    <label class="settings-label">Wake Word</label>
+                    <div class="settings-row">
+                        <div class="setting-item">
+                            <span class="setting-name">Wake Word</span>
+                            <span class="setting-desc">Trigger phrase to activate ORION</span>
+                        </div>
+                        <select class="orion-select" id="setting-wake-word">
+                            <option value="orion">Orion</option>
+                            <option value="hey-orion">Hey ORION</option>
+                            <option value="custom">Custom</option>
+                        </select>
+                    </div>
+                    <div class="setting-row-toggle">
+                        <div class="setting-item">
+                            <span class="setting-name">Wake Word Detection</span>
+                            <span class="setting-desc">Always listen for wake word</span>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="setting-wake-enabled" checked>
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                    <div class="setting-row-slider">
+                        <div class="setting-item">
+                            <span class="setting-name">Wake Word Sensitivity</span>
+                            <span class="setting-desc">Higher = more sensitive (more false triggers)</span>
+                        </div>
+                        <div class="slider-group">
+                            <input type="range" class="orion-range" id="setting-wake-sensitivity" min="0" max="100"
+                                value="50">
+                            <span class="slider-val" id="wake-sensitivity-val">0.5</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="settings-group">
+                    <label class="settings-label">Text-to-Speech</label>
+                    <div class="setting-row-toggle">
+                        <div class="setting-item">
+                            <span class="setting-name">TTS Mode</span>
+                            <span class="setting-desc">Online uses edge-tts (better quality); Offline uses
+                                pyttsx3</span>
+                        </div>
+                        <div class="toggle-text-switch">
+                            <button class="toggle-opt active" id="tts-offline-btn" data-val="offline">Offline</button>
+                            <button class="toggle-opt" id="tts-online-btn" data-val="online">Online</button>
+                        </div>
+                    </div>
+                    <div class="settings-row">
+                        <div class="setting-item">
+                            <span class="setting-name">Voice Gender</span>
+                            <span class="setting-desc">AI voice character</span>
+                        </div>
+                        <select class="orion-select" id="setting-tts-voice">
+                            <option value="female">Female (English) AI Voice</option>
+                            <option value="male">Male (English) AI Voice</option>
+                            <option value="female-hi">Female (Hindi) AI Voice</option>
+                        </select>
+                    </div>
+                    <div class="setting-row-slider">
+                        <div class="setting-item">
+                            <span class="setting-name">Speaking Rate</span>
+                            <span class="setting-desc">Words per minute</span>
+                        </div>
+                        <div class="slider-group">
+                            <input type="range" class="orion-range" id="setting-tts-rate" min="50" max="300"
+                                value="175">
+                            <span class="slider-val" id="tts-rate-val">175</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="settings-group">
+                    <label class="settings-label">Speech Recognition</label>
+                    <div class="settings-row">
+                        <div class="setting-item">
+                            <span class="setting-name">Whisper Model</span>
+                            <span class="setting-desc">Larger = more accurate, slower</span>
+                        </div>
+                        <select class="orion-select" id="setting-whisper-model">
+                            <option value="tiny">Tiny (fastest)</option>
+                            <option value="base">Base</option>
+                            <option value="small" selected>Small (recommended)</option>
+                            <option value="medium">Medium</option>
+                            <option value="large">Large (most accurate)</option>
+                        </select>
+                    </div>
+                    <div class="setting-row-toggle">
+                        <div class="setting-item">
+                            <span class="setting-name">Speaking Style</span>
+                            <span class="setting-desc">How ORION responds to you</span>
+                        </div>
+                        <select class="orion-select" id="setting-speaking-style">
+                            <option value="natural" selected>Natural</option>
+                            <option value="formal">Formal</option>
+                            <option value="casual">Casual</option>
+                            <option value="brief">Brief</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="settings-test-row">
+                    <button class="btn-orion btn-ghost" id="test-voice-btn">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <polygon points="5 3 19 12 5 21 5 3" />
+                        </svg>
+                        Test Voice
+                    </button>
+                    <span class="test-status" id="test-voice-status"></span>
+                </div>
+            </div>
+
+            <!-- Personality & Memory -->
+            <div class="settings-panel" id="section-personality">
+                <h2 class="section-title">Personality & Memory</h2>
+
+                <div class="settings-group">
+                    <label class="settings-label">Operating Mode</label>
+                    <div class="mode-cards">
+                        <div class="mode-card active" data-mode="normal" id="mode-normal">
+                            <div class="mode-icon">⚡</div>
+                            <span class="mode-name">Normal Mode</span>
+                            <span class="mode-desc">Balanced performance and personality</span>
+                        </div>
+                        <div class="mode-card" data-mode="focused" id="mode-focused">
+                            <div class="mode-icon">🎯</div>
+                            <span class="mode-name">Focused Mode</span>
+                            <span class="mode-desc">Minimal responses, task-only</span>
+                        </div>
+                        <div class="mode-card" data-mode="creative" id="mode-creative">
+                            <div class="mode-icon">✨</div>
+                            <span class="mode-name">Creative Mode</span>
+                            <span class="mode-desc">More expressive and conversational</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="settings-group">
+                    <label class="settings-label">Memory & Learning</label>
+                    <div class="setting-row-toggle">
+                        <div class="setting-item">
+                            <span class="setting-name">Enable Memory</span>
+                            <span class="setting-desc">ORION learns from your usage patterns</span>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="setting-memory-enabled" checked>
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                    <div class="setting-row-toggle">
+                        <div class="setting-item">
+                            <span class="setting-name">Command Learning</span>
+                            <span class="setting-desc">Remember frequently used commands</span>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="setting-cmd-learning" checked>
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                    <div class="setting-row-toggle">
+                        <div class="setting-item">
+                            <span class="setting-name">App Usage Tracking</span>
+                            <span class="setting-desc">Prioritize apps you open most</span>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="setting-app-tracking" checked>
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                    <div class="setting-row-toggle">
+                        <div class="setting-item">
+                            <span class="setting-name">Music Preferences</span>
+                            <span class="setting-desc">Learn your music taste</span>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="setting-music-prefs" checked>
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="settings-group">
+                    <label class="settings-label">Memory Management</label>
+                    <div class="memory-stats-row">
+                        <div class="memory-stat">
+                            <span class="mem-val" id="mem-commands">124</span>
+                            <span class="mem-key">Commands Stored</span>
+                        </div>
+                        <div class="memory-stat">
+                            <span class="mem-val" id="mem-apps">38</span>
+                            <span class="mem-key">App Logs</span>
+                        </div>
+                        <div class="memory-stat">
+                            <span class="mem-val" id="mem-songs">57</span>
+                            <span class="mem-key">Songs Played</span>
+                        </div>
+                    </div>
+                    <div class="memory-actions">
+                        <button class="btn-orion btn-ghost" id="view-memory-btn">View Memory</button>
+                        <button class="btn-orion btn-danger" id="clear-memory-btn">Clear All Memory</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Permissions -->
+            <div class="settings-panel" id="section-permissions">
+                <h2 class="section-title">Admin Permissions</h2>
+                <p class="section-desc">Toggle what ORION is allowed to do. Changes take effect immediately.</p>
+
+                <div class="settings-group">
+                    <label class="settings-label">Communication</label>
+                    <div class="setting-row-toggle">
+                        <div class="setting-item">
+                            <span class="setting-name">Auto-reply WhatsApp</span>
+                            <span class="setting-desc">Auto-reply to messages unseen for 10+ minutes</span>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="perm-whatsapp-auto">
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                    <div class="setting-row-toggle">
+                        <div class="setting-item">
+                            <span class="setting-name">Auto-reply Instagram</span>
+                            <span class="setting-desc">Auto-reply to Instagram DMs</span>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="perm-instagram-auto">
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                    <div class="settings-row">
+                        <div class="setting-item">
+                            <span class="setting-name">Auto-reply Delay</span>
+                            <span class="setting-desc">Minutes before triggering auto-reply</span>
+                        </div>
+                        <div class="slider-group">
+                            <input type="range" class="orion-range" id="setting-reply-delay" min="1" max="60"
+                                value="10">
+                            <span class="slider-val" id="reply-delay-val">10 min</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="settings-group">
+                    <label class="settings-label">Calls</label>
+                    <div class="setting-row-toggle">
+                        <div class="setting-item">
+                            <span class="setting-name">Auto-answer Calls</span>
+                            <span class="setting-desc">Automatically answer incoming calls via scrcpy</span>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="perm-auto-call">
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="settings-group">
+                    <label class="settings-label">System</label>
+                    <div class="setting-row-toggle">
+                        <div class="setting-item">
+                            <span class="setting-name">Software Installation</span>
+                            <span class="setting-desc">Allow ORION to install software via voice command</span>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="perm-install">
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                    <div class="setting-row-toggle">
+                        <div class="setting-item">
+                            <span class="setting-name">File Access</span>
+                            <span class="setting-desc">Allow ORION to move, delete, and rename files</span>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="perm-files" checked>
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                    <div class="setting-row-toggle">
+                        <div class="setting-item">
+                            <span class="setting-name">Data Logging</span>
+                            <span class="setting-desc">Log commands and actions for learning</span>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="perm-logging" checked>
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Integrations -->
+            <div class="settings-panel" id="section-integrations">
+                <h2 class="section-title">Integrations</h2>
+
+                <div class="settings-group">
+                    <label class="settings-label">Email (Gmail)</label>
+                    <div class="integration-card" id="gmail-integration">
+                        <div class="int-status" id="gmail-status">
+                            <span class="int-dot disconnected"></span>
+                            <span>Not Connected</span>
+                        </div>
+                        <div class="int-fields">
+                            <input type="email" class="orion-input" id="gmail-address" placeholder="your@gmail.com">
+                            <input type="password" class="orion-input" id="gmail-password" placeholder="App Password">
+                        </div>
+                        <button class="btn-orion btn-ghost" id="gmail-connect-btn">Connect Gmail</button>
+                    </div>
+                </div>
+
+                <div class="settings-group">
+                    <label class="settings-label">Instagram</label>
+                    <div class="integration-card" id="instagram-integration">
+                        <div class="int-status" id="instagram-status">
+                            <span class="int-dot disconnected"></span>
+                            <span>Not Connected</span>
+                        </div>
+                        <div class="int-fields">
+                            <input type="text" class="orion-input" id="instagram-username" placeholder="Username">
+                            <input type="password" class="orion-input" id="instagram-password" placeholder="Password">
+                        </div>
+                        <button class="btn-orion btn-ghost" id="instagram-connect-btn">Connect Instagram</button>
+                    </div>
+                </div>
+
+                <div class="settings-group">
+                    <label class="settings-label">Phone Integration</label>
+                    <div class="integration-card" id="phone-integration">
+                        <div class="int-status" id="phone-status">
+                            <span class="int-dot disconnected"></span>
+                            <span>No Device Connected</span>
+                        </div>
+                        <div class="int-fields">
+                            <input type="text" class="orion-input" id="scrcpy-path"
+                                placeholder="C:\tools\scrcpy\scrcpy.exe">
+                            <input type="text" class="orion-input" id="adb-path"
+                                placeholder="C:\tools\platform-tools\adb.exe">
+                        </div>
+                        <div class="int-actions">
+                            <button class="btn-orion btn-ghost" id="phone-detect-btn">Detect Device</button>
+                            <button class="btn-orion btn-ghost" id="phone-mirror-btn">Start Mirror</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="settings-group">
+                    <label class="settings-label">Ollama LLM</label>
+                    <div class="integration-card" id="ollama-integration">
+                        <div class="int-status" id="ollama-status">
+                            <span class="int-dot" id="ollama-dot"></span>
+                            <span id="ollama-status-text">Checking...</span>
+                        </div>
+                        <div class="int-fields">
+                            <input type="text" class="orion-input" id="ollama-url" value="http://localhost:11434"
+                                placeholder="Ollama URL">
+                            <select class="orion-select" id="ollama-model">
+                                <option value="llama3" selected>llama3</option>
+                                <option value="mistral">mistral</option>
+                                <option value="phi3">phi3</option>
+                            </select>
+                        </div>
+                        <button class="btn-orion btn-ghost" id="ollama-test-btn">Test Connection</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Appearance -->
+            <div class="settings-panel" id="section-appearance">
+                <h2 class="section-title">Appearance</h2>
+
+                <div class="settings-group">
+                    <label class="settings-label">Theme</label>
+                    <div class="theme-cards">
+                        <div class="theme-card active" data-theme="dark-cyan" id="theme-dark-cyan">
+                            <div class="theme-preview dark-cyan-preview"></div>
+                            <span>Dark Cyan</span>
+                        </div>
+                        <div class="theme-card" data-theme="dark-purple" id="theme-dark-purple">
+                            <div class="theme-preview dark-purple-preview"></div>
+                            <span>Dark Purple</span>
+                        </div>
+                        <div class="theme-card" data-theme="dark-red" id="theme-dark-red">
+                            <div class="theme-preview dark-red-preview"></div>
+                            <span>Dark Red</span>
+                        </div>
+                        <div class="theme-card" data-theme="dark-green" id="theme-dark-green">
+                            <div class="theme-preview dark-green-preview"></div>
+                            <span>Dark Green</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="settings-group">
+                    <label class="settings-label">Accent Color</label>
+                    <div class="color-picker-row">
+                        <input type="color" id="accent-color-picker" value="#00e5ff" class="orion-color-input">
+                        <span class="color-hex" id="accent-color-hex">#00e5ff</span>
+                    </div>
+                </div>
+
+                <div class="settings-group">
+                    <label class="settings-label">Display</label>
+                    <div class="setting-row-toggle">
+                        <div class="setting-item">
+                            <span class="setting-name">Animations</span>
+                            <span class="setting-desc">Enable UI animations and transitions</span>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="setting-animations" checked>
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                    <div class="setting-row-toggle">
+                        <div class="setting-item">
+                            <span class="setting-name">Particle Background</span>
+                            <span class="setting-desc">Starfield animation (uses CPU)</span>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="setting-particles" checked>
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                    <div class="setting-row-slider">
+                        <div class="setting-item">
+                            <span class="setting-name">UI Scale</span>
+                            <span class="setting-desc">Overall interface size</span>
+                        </div>
+                        <div class="slider-group">
+                            <input type="range" class="orion-range" id="setting-ui-scale" min="80" max="130"
+                                value="100">
+                            <span class="slider-val" id="ui-scale-val">100%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- System -->
+            <div class="settings-panel" id="section-system">
+                <h2 class="section-title">System</h2>
+
+                <div class="settings-group">
+                    <label class="settings-label">Startup</label>
+                    <div class="setting-row-toggle">
+                        <div class="setting-item">
+                            <span class="setting-name">Launch on Windows Startup</span>
+                            <span class="setting-desc">Start ORION when Windows boots</span>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="setting-startup">
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                    <div class="setting-row-toggle">
+                        <div class="setting-item">
+                            <span class="setting-name">Start Minimized</span>
+                            <span class="setting-desc">Run in background on startup</span>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="setting-start-minimized">
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="settings-group">
+                    <label class="settings-label">Dashboard Server</label>
+                    <div class="settings-row">
+                        <div class="setting-item">
+                            <span class="setting-name">Flask Host</span>
+                        </div>
+                        <input type="text" class="orion-input narrow" id="setting-flask-host" value="0.0.0.0">
+                    </div>
+                    <div class="settings-row">
+                        <div class="setting-item">
+                            <span class="setting-name">Flask Port</span>
+                        </div>
+                        <input type="number" class="orion-input narrow" id="setting-flask-port" value="5000">
+                    </div>
+                </div>
+
+                <div class="settings-group">
+                    <label class="settings-label">About ORION</label>
+                    <div class="about-card">
+                        <div class="about-logo">O·R·I·O·N</div>
+                        <div class="about-info">
+                            <p><strong>Version:</strong> <span id="orion-version">2.3</span></p>
+                            <p><strong>Platform:</strong> Windows 10/11</p>
+                            <p><strong>Python:</strong> 3.10+</p>
+                            <p><strong>Mode:</strong> Offline-first</p>
+                        </div>
+                    </div>
+                    <div class="system-actions">
+                        <button class="btn-orion btn-ghost" id="check-update-btn">Check for Updates</button>
+                        <button class="btn-orion btn-ghost" id="open-logs-btn">Open Logs</button>
+                        <button class="btn-orion btn-danger" id="restart-orion-btn">Restart ORION</button>
+                    </div>
+                </div>
+            </div>
+
+        </div><!-- /.settings-content -->
+    </div><!-- /.settings-layout -->
+
+</section>

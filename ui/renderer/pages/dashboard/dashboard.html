@@ -1,0 +1,340 @@
+<!-- ORION Dashboard Page -->
+<section id="page-dashboard" class="page active" data-page="dashboard">
+
+    <!-- Page Header -->
+    <div class="page-header">
+        <div class="page-title-block">
+            <h1 class="page-title">Dashboard</h1>
+            <p class="page-subtitle">System overview and quick controls</p>
+        </div>
+        <div class="page-actions">
+            <button class="btn-orion btn-ghost" id="dashboard-refresh-btn">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M23 4v6h-6" />
+                    <path d="M1 20v-6h6" />
+                    <path d="M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15" />
+                </svg>
+                Refresh
+            </button>
+            <button class="btn-orion btn-primary" id="dashboard-listen-btn">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z" />
+                    <path d="M19 10v2a7 7 0 0 1-14 0v-2" />
+                    <line x1="12" y1="19" x2="12" y2="23" />
+                    <line x1="8" y1="23" x2="16" y2="23" />
+                </svg>
+                Start Listening
+            </button>
+        </div>
+    </div>
+
+    <!-- System Stats Row -->
+    <div class="stats-row">
+        <div class="stat-card" id="stat-cpu">
+            <div class="stat-icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="4" y="4" width="16" height="16" rx="2" />
+                    <rect x="9" y="9" width="6" height="6" />
+                    <line x1="9" y1="1" x2="9" y2="4" />
+                    <line x1="15" y1="1" x2="15" y2="4" />
+                    <line x1="9" y1="20" x2="9" y2="23" />
+                    <line x1="15" y1="20" x2="15" y2="23" />
+                    <line x1="20" y1="9" x2="23" y2="9" />
+                    <line x1="20" y1="14" x2="23" y2="14" />
+                    <line x1="1" y1="9" x2="4" y2="9" />
+                    <line x1="1" y1="14" x2="4" y2="14" />
+                </svg>
+            </div>
+            <div class="stat-info">
+                <span class="stat-label">CPU</span>
+                <span class="stat-value" id="cpu-value">45%</span>
+            </div>
+            <div class="stat-bar">
+                <div class="stat-bar-fill" id="cpu-bar" style="width: 45%"></div>
+            </div>
+        </div>
+
+        <div class="stat-card" id="stat-ram">
+            <div class="stat-icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="6" y1="12" x2="18" y2="12" />
+                    <path d="M3 7h18a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2z" />
+                    <line x1="8" y1="7" x2="8" y2="3" />
+                    <line x1="16" y1="7" x2="16" y2="3" />
+                </svg>
+            </div>
+            <div class="stat-info">
+                <span class="stat-label">RAM</span>
+                <span class="stat-value" id="ram-value">30%</span>
+            </div>
+            <div class="stat-bar">
+                <div class="stat-bar-fill" id="ram-bar" style="width: 30%"></div>
+            </div>
+        </div>
+
+        <div class="stat-card" id="stat-battery">
+            <div class="stat-icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="1" y="6" width="18" height="12" rx="2" />
+                    <line x1="23" y1="13" x2="23" y2="11" />
+                    <line x1="5" y1="10" x2="5" y2="14" />
+                    <line x1="9" y1="10" x2="9" y2="14" />
+                </svg>
+            </div>
+            <div class="stat-info">
+                <span class="stat-label">Battery</span>
+                <span class="stat-value" id="battery-value">78%</span>
+            </div>
+            <div class="stat-bar">
+                <div class="stat-bar-fill battery" id="battery-bar" style="width: 78%"></div>
+            </div>
+        </div>
+
+        <div class="stat-card" id="stat-net">
+            <div class="stat-icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M5 12.55a11 11 0 0 1 14.08 0" />
+                    <path d="M1.42 9a16 16 0 0 1 21.16 0" />
+                    <path d="M8.53 16.11a6 6 0 0 1 6.95 0" />
+                    <line x1="12" y1="20" x2="12.01" y2="20" />
+                </svg>
+            </div>
+            <div class="stat-info">
+                <span class="stat-label">Network</span>
+                <span class="stat-value" id="net-value">10 mb/s</span>
+            </div>
+            <div class="stat-bar">
+                <div class="stat-bar-fill net" id="net-bar" style="width: 25%"></div>
+            </div>
+        </div>
+
+        <div class="stat-card orion-status-card" id="stat-orion">
+            <div class="orion-pulse-ring"></div>
+            <div class="stat-icon accent">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z" />
+                    <path d="M19 10v2a7 7 0 0 1-14 0v-2" />
+                </svg>
+            </div>
+            <div class="stat-info">
+                <span class="stat-label">ORION</span>
+                <span class="stat-value accent" id="orion-status-text">Listening</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Dashboard Grid -->
+    <div class="dashboard-grid">
+
+        <!-- Left Column: Quick Commands + Recent Activity -->
+        <div class="dashboard-col-main">
+
+            <!-- Quick Command Input -->
+            <div class="dash-card" id="dash-quick-command">
+                <div class="dash-card-header">
+                    <h3>Quick Command</h3>
+                    <span class="card-badge pulse">LIVE</span>
+                </div>
+                <div class="command-input-group">
+                    <input type="text" id="dashboard-command-input" class="orion-input"
+                        placeholder="Type or say a command..." autocomplete="off">
+                    <button class="btn-orion btn-icon" id="dashboard-mic-btn" title="Voice input">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z" />
+                            <path d="M19 10v2a7 7 0 0 1-14 0v-2" />
+                            <line x1="12" y1="19" x2="12" y2="23" />
+                            <line x1="8" y1="23" x2="16" y2="23" />
+                        </svg>
+                    </button>
+                    <button class="btn-orion btn-primary" id="dashboard-execute-btn">Execute</button>
+                </div>
+                <!-- Voice visualizer bar -->
+                <div class="voice-visualizer" id="dashboard-visualizer">
+                    <span></span><span></span><span></span><span></span><span></span>
+                    <span></span><span></span><span></span><span></span><span></span>
+                </div>
+            </div>
+
+            <!-- Recent Commands -->
+            <div class="dash-card" id="dash-recent-commands">
+                <div class="dash-card-header">
+                    <h3>Recent Commands</h3>
+                    <button class="btn-link" onclick="window.orionRouter && orionRouter.navigate('commands')">View All
+                        →</button>
+                </div>
+                <div class="recent-commands-list" id="dashboard-recent-list">
+                    <!-- Populated by dashboard.js -->
+                    <div class="recent-item">
+                        <div class="recent-item-icon">
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <circle cx="12" cy="12" r="10" />
+                                <polyline points="12 6 12 12 16 14" />
+                            </svg>
+                        </div>
+                        <div class="recent-item-text">
+                            <span class="recent-cmd">Start Music Player</span>
+                            <span class="recent-time">09:45</span>
+                        </div>
+                        <span class="recent-status success">✓</span>
+                    </div>
+                    <div class="recent-item">
+                        <div class="recent-item-icon">
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <circle cx="12" cy="12" r="10" />
+                                <polyline points="12 6 12 12 16 14" />
+                            </svg>
+                        </div>
+                        <div class="recent-item-text">
+                            <span class="recent-cmd">Set reminder for lecture today at 4 PM</span>
+                            <span class="recent-time">09:44</span>
+                        </div>
+                        <span class="recent-status success">✓</span>
+                    </div>
+                    <div class="recent-item">
+                        <div class="recent-item-icon">
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <circle cx="12" cy="12" r="10" />
+                                <polyline points="12 6 12 12 16 14" />
+                            </svg>
+                        </div>
+                        <div class="recent-item-text">
+                            <span class="recent-cmd">Open Chrome browser</span>
+                            <span class="recent-time">09:43</span>
+                        </div>
+                        <span class="recent-status success">✓</span>
+                    </div>
+                    <div class="recent-item">
+                        <div class="recent-item-icon">
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <circle cx="12" cy="12" r="10" />
+                                <polyline points="12 6 12 12 16 14" />
+                            </svg>
+                        </div>
+                        <div class="recent-item-text">
+                            <span class="recent-cmd">Search Python decorators</span>
+                            <span class="recent-time">09:41</span>
+                        </div>
+                        <span class="recent-status success">✓</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- To-Do / Tasks -->
+            <div class="dash-card" id="dash-todo">
+                <div class="dash-card-header">
+                    <h3>To-Do List</h3>
+                    <button class="btn-icon-sm" id="add-todo-btn" title="Add task">+</button>
+                </div>
+                <div class="todo-list" id="dashboard-todo-list">
+                    <div class="todo-item done">
+                        <span class="todo-check">✓</span>
+                        <span class="todo-text">Complete Content Page (Claude)</span>
+                    </div>
+                    <div class="todo-item done">
+                        <span class="todo-check">✓</span>
+                        <span class="todo-text">Add New Memory (Orion)</span>
+                    </div>
+                    <div class="todo-item done">
+                        <span class="todo-check">✓</span>
+                        <span class="todo-text">YouTube Course Video</span>
+                    </div>
+                    <div class="todo-item" id="new-todo-row" style="display:none;">
+                        <input type="text" class="orion-input inline-input" id="new-todo-input"
+                            placeholder="New task...">
+                        <button class="btn-orion btn-sm" id="save-todo-btn">Add</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Right Column: Calendar, Reminders, Now Playing -->
+        <div class="dashboard-col-side">
+
+            <!-- Calendar Widget -->
+            <div class="dash-card" id="dash-calendar">
+                <div class="dash-card-header">
+                    <h3>Calendar</h3>
+                    <div class="cal-nav">
+                        <button class="btn-icon-sm" id="cal-prev">‹</button>
+                        <span id="cal-month-label">Thu 2026</span>
+                        <button class="btn-icon-sm" id="cal-next">›</button>
+                    </div>
+                </div>
+                <div class="calendar-widget" id="dashboard-calendar">
+                    <div class="cal-days-header">
+                        <span>Sun</span><span>Mon</span><span>Tue</span><span>Wed</span>
+                        <span>Thu</span><span>Fri</span><span>Sat</span>
+                    </div>
+                    <div class="cal-days-grid" id="cal-days-grid">
+                        <!-- Populated by dashboard.js -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Reminders -->
+            <div class="dash-card" id="dash-reminders">
+                <div class="dash-card-header">
+                    <h3>Reminders</h3>
+                    <button class="btn-link" onclick="window.orionRouter && orionRouter.navigate('reminders')">Manage
+                        →</button>
+                </div>
+                <div class="reminder-list" id="dashboard-reminders">
+                    <div class="reminder-item active">
+                        <span class="reminder-dot green"></span>
+                        <span class="reminder-label">Lecture</span>
+                        <span class="reminder-time">04:00</span>
+                        <button class="reminder-dismiss" data-id="1">✕</button>
+                    </div>
+                    <div class="reminder-item">
+                        <span class="reminder-dot red"></span>
+                        <span class="reminder-label">Meeting</span>
+                        <span class="reminder-time">09:30</span>
+                        <button class="reminder-dismiss" data-id="2">✕</button>
+                    </div>
+                    <div class="reminder-item">
+                        <span class="reminder-dot red"></span>
+                        <span class="reminder-label">Exercise</span>
+                        <span class="reminder-time">08:30</span>
+                        <button class="reminder-dismiss" data-id="3">✕</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Now Playing -->
+            <div class="dash-card now-playing-card" id="dash-now-playing">
+                <div class="dash-card-header">
+                    <h3>Now Playing</h3>
+                    <span class="music-eq-icon" id="music-eq">
+                        <i></i><i></i><i></i><i></i>
+                    </span>
+                </div>
+                <div class="now-playing-body">
+                    <div class="np-album-art" id="np-album-art">
+                        <div class="np-album-placeholder">♪</div>
+                    </div>
+                    <div class="np-info">
+                        <span class="np-title" id="np-title">Love Me Like You Do</span>
+                        <span class="np-artist" id="np-artist">Ellie Goulding</span>
+                        <div class="np-progress-bar">
+                            <div class="np-progress-fill" id="np-progress" style="width: 38%"></div>
+                        </div>
+                        <div class="np-controls">
+                            <button class="np-btn" id="np-prev">⏮</button>
+                            <button class="np-btn np-play" id="np-play">⏸</button>
+                            <button class="np-btn" id="np-next">⏭</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div><!-- /.dashboard-grid -->
+
+</section>

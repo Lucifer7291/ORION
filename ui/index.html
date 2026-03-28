@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ORION — Omni-Response Intelligent Operating Node</title>
+    <link rel="stylesheet" href="src/assets/css/style.css" />
+</head>
+
+<body>
+    <div id="app">
+        <!-- Sidebar -->
+        <div id="sidebar"></div>
+        <!-- Header -->
+        <div id="header"></div>
+        <!-- Main Content -->
+        <main id="main">
+            <div id="page-dashboard" class="page active"></div>
+            <div id="page-commands" class="page"></div>
+            <div id="page-widgets" class="page"></div>
+            <div id="page-automation" class="page"></div>
+            <div id="page-reminders" class="page"></div>
+            <div id="page-apps" class="page"></div>
+            <div id="page-settings" class="page"></div>
+        </main>
+        <!-- Right Panel -->
+        <div id="right-panel"></div>
+        <!-- Command Bar -->
+        <div id="command-bar"></div>
+    </div>
+
+    <!-- Core scripts -->
+    <script src="src/core/state.js"></script>
+    <script src="src/core/router.js"></script>
+    <script src="src/core/api.js"></script>
+
+    <!-- Layout -->
+    <script src="src/layout/sidebar.js"></script>
+    <script src="src/layout/header.js"></script>
+
+    <!-- Components -->
+    <script src="src/components/widget/widget.js"></script>
+    <script src="src/components/card/card.js"></script>
+    <script src="src/components/modal/modal.js"></script>
+
+    <!-- Pages -->
+    <script src="src/pages/dashboard/dashboard.js"></script>
+    <script src="src/pages/commands/commands.js"></script>
+    <script src="src/pages/apps/apps.js"></script>
+    <script src="src/pages/settings/settings.js"></script>
+    <script src="src/pages/widgets/widgets.js"></script>
+    <script src="src/pages/automation/automation.js"></script>
+    <script src="src/pages/reminders/reminders.js"></script>
+
+    <!-- Right Panel & Command Bar -->
+    <script src="src/layout/right-panel.js"></script>
+    <script src="src/layout/command-bar.js"></script>
+
+    <!-- Boot -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            ORION.init();
+        });
+    </script>
+</body>
+
+</html>
