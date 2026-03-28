@@ -4,19 +4,26 @@
 # =========================================================
 
 import subprocess
+import json
 import os
+
+
+APPS_FILE = "memory/apps.json"
 
 
 # ---------------------------------------------------------
 # 🔥 UNIVERSAL APP RUNNER
-# (NO extra cmd window)
 # ---------------------------------------------------------
 def run(command, label):
 
     try:
         subprocess.Popen(
-            command, shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL
+            command,
+            shell=True,
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.DEVNULL,
         )
+
         return f"Opening {label}"
 
     except Exception as e:
@@ -24,10 +31,23 @@ def run(command, label):
 
 
 # ---------------------------------------------------------
+# 🔥 LOAD SCANNED APPS
+# ---------------------------------------------------------
+def load_scanned_apps():
+
+    if not os.path.exists(APPS_FILE):
+        return {}
+
+    try:
+        with open(APPS_FILE, "r", encoding="utf-8") as f:
+            return json.load(f)
+    except:
+        return {}
+
+
+# ---------------------------------------------------------
 # 🧠 SYSTEM APPS
 # ---------------------------------------------------------
-
-
 def open_notepad(t, q):
     return run("notepad", "Notepad")
 
@@ -113,10 +133,40 @@ def open_event_viewer(t, q):
 
 
 # ---------------------------------------------------------
+# 🔥 DYNAMIC APP LAUNCHER
+# ---------------------------------------------------------
+def open_dynamic_app(text, last_query):
+
+    apps = load_scanned_apps()
+
+    if not apps:
+        return None
+
+    words = text.split()
+
+    if len(words) < 2:
+        return None
+
+    app_name = " ".join(words[1:])
+
+    # direct match
+    if app_name in apps:
+        return run(f'"{apps[app_name]}"', app_name)
+
+    # fuzzy match
+    for name in apps:
+        if app_name in name:
+            return run(f'"{apps[name]}"', name)
+
+    return None
+
+
+# ---------------------------------------------------------
 # 🔥 COMMAND REGISTRATION
 # ---------------------------------------------------------
 def register(register_command):
 
+    # system apps
     register_command("open_notepad", open_notepad)
     register_command("open_chrome", open_chrome)
     register_command("open_calculator", open_calculator)
@@ -138,3 +188,6 @@ def register(register_command):
     register_command("open_device_manager", open_device_manager)
     register_command("open_disk_manager", open_disk_manager)
     register_command("open_event_viewer", open_event_viewer)
+
+    # dynamic fallback
+    register_command("open_app", open_dynamic_app)
