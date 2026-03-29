@@ -26,7 +26,6 @@ def register_command(intent, handler):
 
 # =========================================================
 # 🔥 CLEAR REGISTRY
-# Used before reloading modules
 # =========================================================
 def clear_registry():
     COMMAND_REGISTRY.clear()
@@ -35,7 +34,6 @@ def clear_registry():
 
 # =========================================================
 # 🔥 RELOAD COMMANDS
-# Triggered from main.py
 # =========================================================
 def reload_commands(loader_callback=None):
 
@@ -50,7 +48,7 @@ def reload_commands(loader_callback=None):
 # =========================================================
 # 🔥 MAIN EXECUTOR
 # =========================================================
-def execute_command(text, intent=None, last_query=None):
+def execute_command(text, intent=None, last_query=None, context=None):
 
     text = text.lower().strip()
 
@@ -69,9 +67,14 @@ def execute_command(text, intent=None, last_query=None):
     # COMMAND EXECUTION
     # -----------------------------------------------------
     if intent and intent in COMMAND_REGISTRY:
-
         try:
             handler = COMMAND_REGISTRY[intent]
+
+            # pass context first if available
+            if context is not None:
+                return handler(text, context)
+
+            # fallback
             return handler(text, last_query)
 
         except Exception as e:

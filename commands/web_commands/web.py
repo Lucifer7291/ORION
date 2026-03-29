@@ -5,6 +5,23 @@ import urllib.parse
 # -------------------------------------------------
 # HELPERS
 # -------------------------------------------------
+def get_context(obj):
+    return obj if hasattr(obj, "remember_target") else None
+
+
+def remember_web_target(context, name, url, browser="chrome.exe"):
+    """
+    Stores a full web context target.
+    """
+    if context:
+        context.remember_target(
+            name=name,
+            target_type="web_tab",
+            process_name=browser,
+            url=url,
+        )
+
+
 def extract_query(text):
     keywords = ["search for", "search", "find", "look up"]
     for k in keywords:
@@ -13,120 +30,149 @@ def extract_query(text):
     return ""
 
 
-def google_search(text, last_query):
+# -------------------------------------------------
+# SEARCH
+# -------------------------------------------------
+def google_search(text, q):
+
+    context = get_context(q)
+
     query = extract_query(text)
     if not query:
         return "What should I search?"
-    webbrowser.open(f"https://www.google.com/search?q={urllib.parse.quote(query)}")
+
+    url = f"https://www.google.com/search?q={urllib.parse.quote(query)}"
+    webbrowser.open(url)
+
+    remember_web_target(context, "google", url)
+
     return f"Searching Google for {query}"
 
 
-def youtube_search(text, last_query):
+def youtube_search(text, q):
+
+    context = get_context(q)
+
     query = extract_query(text)
     if not query:
         return "What should I search on YouTube?"
-    webbrowser.open(
-        f"https://www.youtube.com/results?search_query={urllib.parse.quote(query)}"
-    )
+
+    url = f"https://www.youtube.com/results?search_query={urllib.parse.quote(query)}"
+    webbrowser.open(url)
+
+    remember_web_target(context, "youtube", url)
+
     return f"Searching YouTube for {query}"
+
+
+# -------------------------------------------------
+# GENERIC WEBSITE OPENER
+# -------------------------------------------------
+def open_site(name, url, context):
+
+    webbrowser.open(url)
+
+    remember_web_target(context, name, url)
+
+    return f"Opening {name.capitalize()}"
 
 
 # -------------------------------------------------
 # OPEN WEBSITES
 # -------------------------------------------------
 def open_google(t, q):
-    webbrowser.open("https://google.com")
-    return "Opening Google"
+    context = get_context(q)
+    return open_site("google", "https://google.com", context)
 
 
 def open_youtube(t, q):
-    webbrowser.open("https://youtube.com")
-    return "Opening YouTube"
+    context = get_context(q)
+    return open_site("youtube", "https://youtube.com", context)
 
 
 def open_github(t, q):
-    webbrowser.open("https://github.com")
-    return "Opening GitHub"
+    context = get_context(q)
+    return open_site("github", "https://github.com", context)
 
 
 def open_stackoverflow(t, q):
-    webbrowser.open("https://stackoverflow.com")
-    return "Opening StackOverflow"
+    context = get_context(q)
+    return open_site("stackoverflow", "https://stackoverflow.com", context)
 
 
 def open_reddit(t, q):
-    webbrowser.open("https://reddit.com")
-    return "Opening Reddit"
+    context = get_context(q)
+    return open_site("reddit", "https://reddit.com", context)
 
 
 def open_twitter(t, q):
-    webbrowser.open("https://twitter.com")
-    return "Opening Twitter"
+    context = get_context(q)
+    return open_site("twitter", "https://twitter.com", context)
 
 
 def open_linkedin(t, q):
-    webbrowser.open("https://linkedin.com")
-    return "Opening LinkedIn"
+    context = get_context(q)
+    return open_site("linkedin", "https://linkedin.com", context)
 
 
 def open_instagram(t, q):
-    webbrowser.open("https://instagram.com")
-    return "Opening Instagram"
+    context = get_context(q)
+    return open_site("instagram", "https://instagram.com", context)
 
 
 def open_whatsapp(t, q):
-    webbrowser.open("https://web.whatsapp.com")
-    return "Opening WhatsApp Web"
+    context = get_context(q)
+    return open_site("whatsapp", "https://web.whatsapp.com", context)
 
 
 def open_gmail(t, q):
-    webbrowser.open("https://mail.google.com")
-    return "Opening Gmail"
+    context = get_context(q)
+    return open_site("gmail", "https://mail.google.com", context)
 
 
 def open_drive(t, q):
-    webbrowser.open("https://drive.google.com")
-    return "Opening Google Drive"
+    context = get_context(q)
+    return open_site("drive", "https://drive.google.com", context)
 
 
 def open_maps(t, q):
-    webbrowser.open("https://maps.google.com")
-    return "Opening Google Maps"
+    context = get_context(q)
+    return open_site("maps", "https://maps.google.com", context)
 
 
 def open_chatgpt(t, q):
-    webbrowser.open("https://chat.openai.com")
-    return "Opening ChatGPT"
+    context = get_context(q)
+    return open_site("chatgpt", "https://chat.openai.com", context)
 
 
 def open_netflix(t, q):
-    webbrowser.open("https://netflix.com")
-    return "Opening Netflix"
+    context = get_context(q)
+    return open_site("netflix", "https://netflix.com", context)
 
 
 def open_amazon(t, q):
-    webbrowser.open("https://amazon.in")
-    return "Opening Amazon"
+    context = get_context(q)
+    return open_site("amazon", "https://amazon.in", context)
 
 
 def open_flipkart(t, q):
-    webbrowser.open("https://flipkart.com")
-    return "Opening Flipkart"
+    context = get_context(q)
+    return open_site("flipkart", "https://flipkart.com", context)
 
 
 def open_wikipedia(t, q):
-    webbrowser.open("https://wikipedia.org")
-    return "Opening Wikipedia"
+    context = get_context(q)
+    return open_site("wikipedia", "https://wikipedia.org", context)
 
 
 def open_news(t, q):
-    webbrowser.open("https://news.google.com")
-    return "Opening News"
+    context = get_context(q)
+    return open_site("news", "https://news.google.com", context)
 
 
 def open_speedtest(t, q):
-    webbrowser.open("https://fast.com")
-    return "Opening Speed Test"
+    context = get_context(q)
+    return open_site("speedtest", "https://fast.com", context)
 
 
 # -------------------------------------------------
@@ -136,6 +182,7 @@ def register(register_command):
 
     register_command("search", google_search)
     register_command("youtube_search", youtube_search)
+
     register_command("open_google", open_google)
     register_command("open_youtube", open_youtube)
     register_command("open_github", open_github)

@@ -3,43 +3,108 @@
         "hi",
         "hello",
         "hey",
+        "hii",
         "good morning",
         "good evening",
-        "good afternoon"
+        "good afternoon",
+        "yo orion",
+        "hello orion",
+        "hi orion"
     ],
     "search": [
         "search",
+        "search for",
         "find",
-        "look up"
+        "look up",
+        "look for",
+        "google",
+        "search on google"
     ],
     "scan_apps": [
         "scan apps",
         "scan system apps",
+        "scan applications",
+        "scan installed apps",
         "search apps",
-        "scan applications"
+        "detect apps",
+        "refresh apps list",
+        "index apps"
     ],
     "scan_progress": [
         "scan progress",
         "scan percentage",
         "how much scan done",
         "scan completion",
-        "scan percent"
+        "scan percent",
+        "scan percent done",
+        "how much scan completed",
+        "how far is scan"
     ],
     "scan_status": [
         "scan status",
         "is scan running",
         "scanner status",
-        "scan state"
+        "scan state",
+        "scan running",
+        "is scanner running"
+    ],
+    "apps_count": [
+        "apps count",
+        "how many apps",
+        "how many apps scanned",
+        "how many apps indexed",
+        "total apps"
+    ],
+    "repeat": [
+        "repeat",
+        "again",
+        "do it again",
+        "one more time",
+        "repeat that",
+        "do that again"
+    ],
+    "history": [
+        "show history",
+        "command history",
+        "what did i say",
+        "show command history",
+        "my history",
+        "recent commands"
+    ],
+    "last_command": [
+        "last command",
+        "previous command",
+        "what was my last command",
+        "show previous command"
+    ],
+    "open_it": [
+        "open it",
+        "open that",
+        "launch it",
+        "start it",
+        "open it again",
+        "open that again"
+    ],
+    "close_it": [
+        "close it",
+        "close that",
+        "stop it",
+        "end it"
     ],
     "open_app": [
         "open",
         "launch",
-        "start"
+        "start",
+        "run",
+        "open app",
+        "launch app",
+        "start app"
     ],
     "open_youtube": [
         "open youtube",
         "start youtube",
-        "launch youtube"
+        "launch youtube",
+        "play youtube"
     ],
     "open_google": [
         "open google",
@@ -48,51 +113,64 @@
     ],
     "open_github": [
         "open github",
-        "start github"
+        "start github",
+        "launch github"
     ],
     "open_stackoverflow": [
         "open stackoverflow",
-        "start stackoverflow"
+        "start stackoverflow",
+        "launch stackoverflow"
     ],
     "open_notepad": [
         "open notepad",
-        "start notepad"
+        "start notepad",
+        "launch notepad"
     ],
     "open_calculator": [
         "open calculator",
-        "start calculator"
+        "start calculator",
+        "launch calculator",
+        "open calc"
     ],
     "open_cmd": [
         "open cmd",
         "cmd",
         "command prompt",
-        "open command prompt"
+        "open command prompt",
+        "start cmd"
     ],
     "open_chrome": [
         "open chrome",
         "start chrome",
         "launch chrome",
-        "chrome browser"
+        "chrome browser",
+        "open google chrome"
     ],
     "open_vscode": [
         "open vscode",
         "open visual studio code",
-        "start vscode"
+        "start vscode",
+        "launch vscode",
+        "open code editor"
     ],
     "open_task_manager": [
         "open task manager",
-        "start task manager"
+        "start task manager",
+        "launch task manager"
     ],
     "open_control_panel": [
-        "open control panel"
+        "open control panel",
+        "start control panel"
     ],
     "open_downloads": [
         "open downloads",
-        "show downloads"
+        "show downloads",
+        "open download folder"
     ],
     "open_documents": [
         "open documents",
-        "show documents"
+        "show documents",
+        "open document folder"
     ],
     "open_desktop": [
         "open desktop",
@@ -101,78 +179,96 @@
     "shutdown": [
         "shutdown pc",
         "turn off computer",
-        "power off"
+        "power off",
+        "shutdown system",
+        "turn off pc"
     ],
     "restart": [
         "restart pc",
-        "reboot system"
+        "reboot system",
+        "restart system",
+        "reboot pc"
     ],
     "lock": [
         "lock system",
-        "lock pc"
+        "lock pc",
+        "lock computer"
+    ],
+    "sleep": [
+        "sleep",
+        "sleep pc",
+        "sleep system",
+        "put pc to sleep"
+    ],
+    "clear": [
+        "clear",
+        "clear screen",
+        "clear terminal",
+        "clear console"
     ],
     "volume_up": [
         "increase volume",
         "volume up",
         "raise volume",
-        "increase sound"
+        "increase sound",
+        "make it louder"
     ],
     "volume_down": [
         "decrease volume",
         "volume down",
         "lower volume",
-        "reduce volume"
+        "reduce volume",
+        "make it quieter"
     ],
     "mute": [
         "mute",
         "mute volume",
-        "silence"
+        "silence",
+        "turn off sound"
     ],
     "unmute": [
         "unmute",
         "sound on",
-        "turn on sound"
+        "turn on sound",
+        "restore sound"
     ],
     "max_volume": [
         "max volume",
         "full volume",
-        "maximum volume"
+        "maximum volume",
+        "set volume to max"
     ],
     "min_volume": [
         "minimum volume",
         "zero volume",
-        "mute completely"
-    ],
-    "repeat": [
-        "more",
-        "again",
-        "do it again"
+        "mute completely",
+        "set volume to zero"
     ],
     "weather": [
         "weather",
         "today weather",
-        "temperature"
+        "temperature",
+        "current weather",
+        "weather today"
     ],
     "system_info": [
         "system status",
         "cpu usage",
         "ram usage",
-        "battery status"
+        "battery status",
+        "system info",
+        "pc status"
     ],
     "time": [
         "time",
-        "what time is it"
+        "what time is it",
+        "current time",
+        "tell me the time"
     ],
     "date": [
         "date",
-        "today date"
-    ],
-    "clear": [
-        "clear",
-        "clear screen"
-    ],
-    "sleep": [
-        "sleep",
-        "sleep pc"
+        "today date",
+        "what is today's date",
+        "current date"
     ]
 }
