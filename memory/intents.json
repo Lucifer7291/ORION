@@ -57,7 +57,6 @@
     ],
     "repeat": [
         "repeat",
-        "again",
         "do it again",
         "one more time",
         "repeat that",
@@ -219,6 +218,23 @@
         "lower volume",
         "reduce volume",
         "make it quieter"
+    ],
+    "volume_more": [
+        "more",
+        "more volume",
+        "a bit more",
+        "little more",
+        "bit louder",
+        "more louder"
+    ],
+    "volume_less": [
+        "less",
+        "less volume",
+        "decrease more",
+        "a bit less",
+        "little less",
+        "bit quieter",
+        "more quieter"
     ],
     "mute": [
         "mute",

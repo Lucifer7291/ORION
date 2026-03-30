@@ -23,6 +23,10 @@ class ContextManager:
         self.last_target = None
         self.last_closed_target = None
 
+        # Volume action context
+        # Stores: "up" | "down" | "mute" | "unmute" | "max" | "min"
+        self.last_volume_action = None
+
     # -----------------------------------------------------
     # STORE COMMAND
     # -----------------------------------------------------
@@ -55,6 +59,16 @@ class ContextManager:
     # -----------------------------------------------------
     def remember_search(self, query):
         self.last_search = query
+
+    # -----------------------------------------------------
+    # STORE VOLUME ACTION
+    # action: "up" | "down" | "mute" | "unmute" | "max" | "min"
+    # -----------------------------------------------------
+    def remember_volume_action(self, action):
+        self.last_volume_action = action
+
+    def get_last_volume_action(self):
+        return self.last_volume_action
 
     # -----------------------------------------------------
     # STORE TARGET CONTEXT
@@ -184,3 +198,5 @@ class ContextManager:
 
         self.last_target = None
         self.last_closed_target = None
+
+        self.last_volume_action = None

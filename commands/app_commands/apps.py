@@ -9,6 +9,7 @@ import os
 import re
 import time
 import psutil
+import webbrowser
 from difflib import get_close_matches
 
 
@@ -22,6 +23,47 @@ APP_ALIASES = {
     "chrome browser": "chrome",
     "command prompt": "cmd",
     "smart connect": "smartconnect",
+}
+
+# Map of common app name keywords -> process .exe names
+# Used for closing apps by name even if never opened via ORION
+KNOWN_PROCESSES = {
+    "chrome":           "chrome.exe",
+    "firefox":          "firefox.exe",
+    "edge":             "msedge.exe",
+    "brave":            "brave.exe",
+    "opera":            "opera.exe",
+    "notepad":          "notepad.exe",
+    "calculator":       "CalculatorApp.exe",
+    "cmd":              "cmd.exe",
+    "command prompt":   "cmd.exe",
+    "powershell":       "powershell.exe",
+    "vscode":           "Code.exe",
+    "code":             "Code.exe",
+    "visual studio code": "Code.exe",
+    "task manager":     "Taskmgr.exe",
+    "taskmgr":          "Taskmgr.exe",
+    "control panel":    "control.exe",
+    "paint":            "mspaint.exe",
+    "wordpad":          "wordpad.exe",
+    "explorer":         "explorer.exe",
+    "file explorer":    "explorer.exe",
+    "snipping tool":    "SnippingTool.exe",
+    "camera":           "WindowsCamera.exe",
+    "store":            "WinStore.App.exe",
+    "terminal":         "WindowsTerminal.exe",
+    "spotify":          "Spotify.exe",
+    "discord":          "Discord.exe",
+    "vlc":              "vlc.exe",
+    "steam":            "steam.exe",
+    "word":             "WINWORD.EXE",
+    "excel":            "EXCEL.EXE",
+    "powerpoint":       "POWERPNT.EXE",
+    "outlook":          "OUTLOOK.EXE",
+    "teams":            "Teams.exe",
+    "zoom":             "Zoom.exe",
+    "obs":              "obs64.exe",
+    "postman":          "Postman.exe",
 }
 
 
@@ -249,6 +291,45 @@ def open_event_viewer(t, q):
 
 
 # ---------------------------------------------------------
+# WEB COMMANDS
+# ---------------------------------------------------------
+def open_youtube(t, q):
+    context = get_context(q)
+    webbrowser.open("https://www.youtube.com")
+    if context:
+        context.remember_target(name="youtube", target_type="web_tab",
+                                process_name="chrome.exe", url="https://www.youtube.com")
+    return "Opening YouTube"
+
+
+def open_google(t, q):
+    context = get_context(q)
+    webbrowser.open("https://www.google.com")
+    if context:
+        context.remember_target(name="google", target_type="web_tab",
+                                process_name="chrome.exe", url="https://www.google.com")
+    return "Opening Google"
+
+
+def open_github(t, q):
+    context = get_context(q)
+    webbrowser.open("https://www.github.com")
+    if context:
+        context.remember_target(name="github", target_type="web_tab",
+                                process_name="chrome.exe", url="https://www.github.com")
+    return "Opening GitHub"
+
+
+def open_stackoverflow(t, q):
+    context = get_context(q)
+    webbrowser.open("https://stackoverflow.com")
+    if context:
+        context.remember_target(name="stackoverflow", target_type="web_tab",
+                                process_name="chrome.exe", url="https://stackoverflow.com")
+    return "Opening Stack Overflow"
+
+
+# ---------------------------------------------------------
 # DYNAMIC APP LAUNCHER
 # ---------------------------------------------------------
 def open_dynamic_app(text, q):
@@ -272,15 +353,10 @@ def open_dynamic_app(text, q):
 
 
 # ---------------------------------------------------------
-# CLOSE HELPERS — dynamic, no hardcoded app list
+# CLOSE HELPERS
 # ---------------------------------------------------------
 def _find_running_process(name):
-    """
-    Scan all live running processes and match by name.
-    Returns the real .exe name if found, else None.
-    """
     name = name.lower().strip()
-
     for proc in psutil.process_iter(["name"]):
         try:
             proc_name = (proc.info["name"] or "").lower()
@@ -291,25 +367,17 @@ def _find_running_process(name):
                 .replace("-", " ")
                 .lower()
             )
-
             if name in proc_clean or proc_clean in name:
-                return proc.info["name"]  # e.g. "Spotify.exe"
-
+                return proc.info["name"]
         except (psutil.NoSuchProcess, psutil.AccessDenied):
             continue
-
     return None
 
 
 def _find_running_browser():
-    """
-    Check which browser is currently running.
-    Returns its .exe name or None.
-    """
     known_browsers = [
         "chrome.exe", "firefox.exe", "msedge.exe", "opera.exe", "brave.exe"
     ]
-
     try:
         running = {
             p.info["name"].lower()
@@ -321,12 +389,10 @@ def _find_running_browser():
                 return browser
     except Exception:
         pass
-
     return None
 
 
 def _kill_process(name, process_name, context=None):
-    """Kill a process by its .exe name."""
     try:
         result = subprocess.run(
             f'taskkill /IM "{process_name}" /F',
@@ -334,7 +400,6 @@ def _kill_process(name, process_name, context=None):
             stdout=subprocess.DEVNULL,
             stderr=subprocess.DEVNULL,
         )
-
         if result.returncode == 0:
             if context:
                 context.remember_closed_target(
@@ -343,16 +408,47 @@ def _kill_process(name, process_name, context=None):
                     process_name=process_name,
                 )
             return f"Closed {name}"
-
         return f"Could not close {name}. It may already be closed."
-
     except Exception as e:
         return f"Error closing {name}: {e}"
 
 
 # ---------------------------------------------------------
+# CLOSE APP BY NAME — "close chrome", "close spotify" etc.
+# ---------------------------------------------------------
+def close_app(text, q):
+    context = get_context(q)
+    app_name = normalize_name(text)
+
+    if not app_name:
+        return "Which app should I close?"
+
+    # 1. Check known process map first
+    process_name = None
+    for key, exe in KNOWN_PROCESSES.items():
+        if app_name in key or key in app_name:
+            process_name = exe
+            break
+
+    # 2. Fuzzy match on known processes
+    if not process_name:
+        matches = get_close_matches(app_name, list(
+            KNOWN_PROCESSES.keys()), n=1, cutoff=0.6)
+        if matches:
+            process_name = KNOWN_PROCESSES[matches[0]]
+
+    # 3. Scan live processes as last resort
+    if not process_name:
+        process_name = _find_running_process(app_name)
+
+    if process_name:
+        return _kill_process(app_name, process_name, context)
+
+    return f"Could not find a running process for: {app_name}"
+
+
+# ---------------------------------------------------------
 # CLOSE LAST (close it / close that)
-# Uses context to know what was last opened.
 # ---------------------------------------------------------
 def close_last_app(text, q):
     context = get_context(q)
@@ -374,7 +470,6 @@ def close_last_app(text, q):
         from main import close_browser_tab
         browser = process_name or "chrome.exe"
         success = close_browser_tab(browser)
-
         if success:
             context.remember_closed_target(
                 name=name,
@@ -383,10 +478,9 @@ def close_last_app(text, q):
                 url=target.get("url"),
             )
             return f"Closed {name} tab"
-
         return f"Could not close {name} tab"
 
-    # regular app — kill the process
+    # regular app
     if process_name:
         return _kill_process(name, process_name, context)
 
@@ -398,6 +492,7 @@ def close_last_app(text, q):
 # ---------------------------------------------------------
 def register(register_command):
 
+    # Built-in apps
     register_command("open_notepad", open_notepad)
     register_command("open_chrome", open_chrome)
     register_command("open_calculator", open_calculator)
@@ -420,5 +515,13 @@ def register(register_command):
     register_command("open_disk_manager", open_disk_manager)
     register_command("open_event_viewer", open_event_viewer)
 
+    # Web commands
+    register_command("open_youtube", open_youtube)
+    register_command("open_google", open_google)
+    register_command("open_github", open_github)
+    register_command("open_stackoverflow", open_stackoverflow)
+
+    # Dynamic + close
     register_command("open_app", open_dynamic_app)
+    register_command("close_app", close_app)
     register_command("close_it", close_last_app)
